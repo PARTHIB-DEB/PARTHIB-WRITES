@@ -1,0 +1,66 @@
+{% load tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}{% endblock title %}|Myblog</title>
+    {% tailwind_css %}
+  </head>
+
+  <body>
+    <nav>
+      <div
+        class="logo float-left p-4 mx-[2.5rem] my-[0.25rem] italic font-extrabold"
+      >
+        MY/BLOG
+      </div>
+      <div class="flex justify-end items-center p-3 lg:hidden">
+        <div class="name-menu flex justify-between">
+          <div class="hamburger inline-block p-1 cursor-pointer" id="ham">
+            <div class="lines h-1 bg-black w-6 my-1"></div>
+            <div class="lines h-1 bg-black w-6 my-1"></div>
+            <div class="lines h-1 bg-black w-6 my-1"></div>
+          </div>
+        </div>
+      </div>
+      <div class="open-ham w-[100%] h-[9rem] bg-zinc-300 -mt-[4px]  lg:hidden" id="opham">
+        <div class="inside-ham flex flex-wrap justify-center my-2 pt-[13px]" style="flex-direction:column;">
+          <div class="first-duo flex justify-evenly">
+            <div class="home  mx-[5rem] hover:underline"><a href="/">Home</a></div>
+            <div class="about mx-[5rem] hover:underline "><a href="/about">About me</a></div>
+          </div>
+          <div class="second-duo flex justify-evenly mt-5 -ml-[0.5rem]">
+            <div class="topics mx-[5rem] hover:underline"><a href="{% url 'content' %}">Contents</a></div>
+          </div>
+          <button class="bg-purple-500 text-white rounded-full  px-8 py-1 mt-[2rem] hover:bg-black"><a
+              href="/create">New Blog</a></button>
+        </div>
+      </div>
+      <ul
+        class="hidden lg:flex py-5 space-x-20 mx-0 justify-center hover:cursor-pointer"
+      >
+        <li class="hover:underline">
+          <a href="/">Home</a>
+        </li>
+        <li class="hover:underline">
+          <a href="/about">About me</a>
+        </li>
+        <li class="hover:underline">
+          <a href="{% url 'content' %}">Contents</a>
+        </li>
+        <button
+          class="bg-purple-500 text-white rounded-full px-8 py-1 -mt-[2px] hover:bg-black"
+          id="demo"
+        >
+          <a href="/create">New Blog</a>
+        </button>
+      </ul>
+    </nav>
+    <main id="main" class="-translate-y-[9rem] lg:translate-y-0">
+      {% block main %}{% endblock main %}
+    </main>
+    <script src="/static/js/main.js"></script>
+  </body>
+</html>

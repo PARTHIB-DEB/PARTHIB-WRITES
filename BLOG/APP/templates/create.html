@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title%}Create{% endblock title%} 
+
+{% block main %}
+<div class="h-[100%] bg-gradient-to-r from-indigo-500 to-neutral-500">
+  <div class="form-name flex justify-center py-5">
+    <div class="name font-sans font-bold text-sky-300 underline -ml-[85px] text-lg md:-ml-[5.5rem] md:text-2xl lg:ml-10 ">NEW BLOG</div>
+  </div>
+  <div class="form-block flex justify-center">
+    <div class="pl-0 pr-[42rem] h-[34rem] mb-[8rem] sl:pr-[25.5rem] xs:pr-[18rem] xxs:pr-0 xs:h-[39rem] xs:mb-[8rem] s:pr-[31rem] s:h-[44rem] s:mb-[8rem] md:pr-[46rem] lg:h-[75rem] w-[20rem] lg:pl-[20rem] lg:pr-[35rem] lg:py-5 xl:px-[35rem] bg-white lg:mx-[35rem] lg:mb-15 border-4 shadow-2xl shadow-yellow-300/90">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="create-title ml-[1rem] md:-ml-[17rem] xl:-ml-[30rem] mt-10">
+          <label for="title" class="font-serif font-medium text-lg">Blog Title</label><br>
+          <input type="text" id="title" placeholder="Enter Title(Maximum 30 Chars.)" name="title" class=" w-[28rem] md:w-[47rem] border-[1px] rounded-lg border-black  lg:w-[60rem] h-[2.5rem] mt-[5px] p-4"><br>
+        </div>
+
+        <div class="create-slug ml-[1rem] md:-ml-[17rem] xl:-ml-[30rem] mt-10">
+          <label for="slug" class="font-serif font-medium text-lg">Blog No</label><br>
+          <input type="text" id="slug" placeholder="Enter No(Always give Unique)" name="slug" class=" w-[28rem] md:w-[47rem] border-[1px] rounded-lg border-black  lg:w-[60rem] h-[2.5rem] mt-[5px] p-4"><br>
+        </div>
+  
+        <div class="create-catchline  ml-[1rem] md:-ml-[17rem] xl:-ml-[30rem] mt-10">
+          <label for="catch" class="font-serif font-medium text-lg">Catchline</label><br>
+          <input type="text" id="title" placeholder="Enter Catchline(Maximum 30 Chars.)" name="catch" class=" w-[28rem] md:w-[47rem] border-[1px] rounded-lg border-black  lg:w-[60rem] h-[2.5rem] mt-[5px] p-4"><br>
+        </div>
+  
+        <div class="image md:mt-[2rem] ml-0">
+          <label for="image" class="font-serif font-medium text-lg" style="margin-left: -30rem;" class="mt-10">Give Thumbnail:</label>
+          <input type="file" class="form-control"  name="image">
+        </div>
+  
+        <div class="create-details  md:-ml-[30rem] mt-10 w-[28rem] md:w-[60rem] mb-[10rem] ">
+          <label for="details" class="font-serif font-medium text-lg">Blog Details</label><br>
+          <textarea id="details" name="details" rows="4" cols="125" placeholder="Write Here" class=" mt-2 max-h-[40rem] border-1 rounded-lg p-4"></textarea>
+          <div class="buttons flex justify-center">
+            <button class="bg-purple-500 text-white rounded-full  md:px-8 md:py-2 hover:bg-black mt-[1rem]"><input type="submit" value="Create"></button>
+          </div>
+        </div>
+      </form> 
+    </div>
+  </div>
+</div>
+
+{% endblock main %}
