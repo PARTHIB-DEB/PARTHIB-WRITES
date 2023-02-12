@@ -13,7 +13,7 @@ I have created a Personal Blog where I can add blog contents and do some other n
 
 ## Tech Stack
 
-**Frontend:** Html,TailwindCSS,JS
+**Frontend:** HTML5 , TAILWINDCSS , JS
 
 **Server:** Django
 
