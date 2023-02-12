@@ -26,7 +26,7 @@ I have created a Personal Blog where I can add blog contents and do some other n
 
 ## Documentation
 
-As this is my first DJANGO-TAILWIND project, the Documentation of django-tailwind is given below for understanding the commands used to run and upload static changes to the server
+As this is my first DJANGO-TAILWIND project, the Documentation of django-tailwind is given below for understanding the commands used to run and upload static changes to the server.
 
 [Documentation](https://django-tailwind.readthedocs.io/en/latest/index.html)
 
