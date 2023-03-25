@@ -37,7 +37,7 @@ def update(request,pk):
     blog_obj=Blog.objects.filter(slug=pk).all()
     initial={'myblog':blog_obj}
     if request.method == "POST":
-        form = Blogform(request.POST)
+        # form = Blogform(request.POST)
         title = request.POST['title']
         catch = request.POST['catch']
         details = request.POST['details']
