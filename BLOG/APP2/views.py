@@ -13,15 +13,6 @@ def about(request):
 
 def create(request):
     if request.method == "POST":
-        # form = Blogform(request.POST)
-        # if form.is_valid():
-        #     title = form.cleaned_data['title']
-        #     catch = form.cleaned_data['catch']
-        #     image = form.cleaned_data['image']
-        #     details = form.cleaned_data['details']
-        # else:
-        #     form = Blogform()
-
         title = request.POST['title']
         catch = request.POST['catch']
         image = request.FILES['image']
@@ -45,15 +36,8 @@ def read(request,pk):
 def update(request,pk):
     blog_obj=Blog.objects.filter(slug=pk).all()
     initial={'myblog':blog_obj}
-    # form=Blogform(initial=initial)
     if request.method == "POST":
         form = Blogform(request.POST)
-        # if form.is_valid():
-        #     title = form.cleaned_data['title']
-        #     catch = form.cleaned_data['catch']
-        #     details = form.cleaned_data['details']
-        # else:
-        #     form = Blogform()
         title = request.POST['title']
         catch = request.POST['catch']
         details = request.POST['details']
