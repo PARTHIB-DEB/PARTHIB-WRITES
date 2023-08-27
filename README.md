@@ -36,4 +36,4 @@ As this is my first DJANGO-TAILWIND project, the Documentation of django-tailwin
 
 A social link is given below for better understanding of my project's complete functionalities.
 
-https://www.linkedin.com/posts/parthib-kumar-deb-a438a6234_htmlcss-tailwindcss-django-activity-7030089986611785728-95T8?utm_source=share&utm_medium=member_desktop
+https://www.linkedin.com/posts/parthib-deb_htmlcss-tailwindcss-django-activity-7030089986611785728-iQBo?utm_source=share&utm_medium=member_desktop
