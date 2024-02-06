@@ -9,7 +9,7 @@
 |--------------|-----------|------------|
 | Django-Tailwind Packadge | Yes     | No (Will manually do)   |
 | Emailing    | No  | Yes (Trying to add by third party service)   |
-| Authentication   | No  | Yes (Trying to do add Third Party auth)  |
+| Authentication   | No  | Yes (Trying to do add Native, May add Third Party auth also)  |
 | Payment Gateway | No  | Yes (Trying to do add Third Party services)  |
 
 - 🍒 Development Addon - Will Provide REST APIs to connect it with any other microservices ,  Trying to implement Testing 🧪 🧪.
