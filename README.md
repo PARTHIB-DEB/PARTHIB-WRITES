@@ -21,3 +21,8 @@
 ```bash
   git clone https://github.com/PARTHIB-DEB/PERSONAL-BLOG.git
 ```
+
+```bash
+  python -m pip install -r .\requirements.txt
+```
+**Although Upgrade Your Django Version , whenever you download it.**
