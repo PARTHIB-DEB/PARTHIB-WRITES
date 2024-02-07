@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+
+<main>
+    <!--Reading Blog-->
+    <div class="read-blog w-full flex justify-center items-center flex-col px-8 mt-5 text-black">
+        <img src="/static/card.png" alt="" srcset=""
+            class="-mt-[2rem] md:-mt-[6rem] w-auto h-auto border-2 solid border-green-400" />
+        <div class="description flex flex-col mt-5 items-center justify-center w-full h-auto bg-white rounded-lg">
+            <p class="b-desc-show text-xl sm:text-2xl md:text-4xl text-center mt-5">
+                Blog Description
+            </p>
+            <button type="submit"
+                class="h-[2rem] w-[8rem] md:w-[8.5rem] mt-[2rem] bg-blue-500 rounded-xl hover:bg-purple-600">
+                <a href="/create">
+                    <p class="text-center text-white text-lg">Create Blog</p>
+                </a>
+            </button>
+        </div>
+    </div>
+</main>
+  
+{% endblock content %}

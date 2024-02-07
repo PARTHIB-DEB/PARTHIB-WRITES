@@ -8,16 +8,124 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content= "width=device-width, initial-scale=1.0">
     <title>Django + Tailwind CSS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     {% compress css %}
     <link rel="stylesheet" href="/static/output.css">
     {% endcompress %}
 </head>
 
-<body class="bg-green-50">
-    <div class="container mx-auto mt-4">
-        {% block content %}
-        {% endblock content %}
-    </div>
+<!--Home Page-->
+<body class="overflow-x-hidden bg-no-repeat bg-center bg-cover text-yellow-200"
+    style="background-image: url('/static/blog-bg-index.jpg'); font-family: Mukta; font-weight: 400; filter: drop-shadow(1px 1px  1px green);">
+    <!--Header-->
+    <header class="py-[1.2rem] w-full bg-transparent md:mt-[1.5rem] md:mb-[3rem]">
+        <!--Small Navbar-->
+        <div class="small-navbar w-auto px-[1.5rem] md:hidden hover:cursor-pointer" id="smallnav">
+            <div class="nav-ham flex items-center justify-between text-xl ">
+                <a href="/">
+                    <p class="site-name hover:cursor-pointer " id="site-name">
+                        <i>Parthib-Writes</i>
+                    </p>
+                </a>
+                <!--Manual Hamburger Creation-->
+                <div class="flex justify-end items-center -mr-[1rem] z-[10]" id="ham">
+                    <div class="name-menu flex justify-between">
+                        <div class="hamburger inline-block p-1 cursor-pointer">
+                            <div class="lines h-1 bg-black w-6 my-1 rounded-md"></div>
+                            <div class="lines h-1 bg-black w-6 my-1 rounded-md"></div>
+                            <div class="lines h-1 bg-black w-6 my-1 rounded-md"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Floating ham menu-->
+            <div class="encap-float-menu h-[23rem] w-[88%]  flex justify-center items-center absolute">
+                <div class="small-nav-float h-full w-full -translate-y-[30rem]  hidden flex-col items-center justify-center space-y-[2.5rem]  absolute text-2xl bg-white text-black rounded-xl md:rounded-2xl"
+                    id="navItems">
+                    <p class="blogss hover:cursor-pointer">Blogs</p>
+                    <p class="platforms hover:cursor-pointer">Other Platforms</p>
+                    <p class="cat hover:cursor-pointer">Courses</p>
+                    <button type="submit"
+                        class="h-[2rem] w-[8rem] md:w-[8.5rem] bg-blue-500 rounded-xl hover:bg-purple-600">
+                        <a href="/create>
+                            <p class="text-center text-white text-lg">Create Blog</p>
+                        </a>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!--Large Navbar + all menus-->
+        <div class="large-navbar hidden md:flex justify-evenly items-centers text-xl">
+            <a href="/">
+                <p class="site-name hover:cursor-pointer " id="site-name">
+                    <i>Parthib-Writes</i>
+                </p>
+            </a>
+            <p class="blogss hover:cursor-pointer">Blogs</p>
+            <p class="platforms hover:cursor-pointer">Other Platforms</p>
+            <p class="cat hover:cursor-pointer">Courses</p>
+            <button type="submit"
+                class="h-[2rem] md:h-[2.2rem] w-[6.5rem] md:w-[8.5rem] bg-blue-500 rounded-xl hover:bg-purple-600">
+                <a href="/create">
+                    <p class="text-center text-white text-lg">Create Blog</p>
+                </a>
+            </button>
+        </div>
+        <!--Quote-->
+        <div class="py-8 px-4 mx-auto max-w-screen-xl text-center mt-[3rem] md:mt-[8rem] lg:py-16 lg:px-12">
+            <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl lg:text-6xl">
+                Welcome to My Personal Blog
+            </h1>
+            <p class="mb-8 text-lg font-normal text-gray-200 lg:text-xl sm:px-16 xl:px-48">
+                Explore the space. Grab a Coffee and enjoy my series of experiences.
+            </p>
+        </div>
+    </header>
+    {% block content %}
+    <main>
+        <!--Trendy Blogs-->
+        <div class="trendy-blogs">
+            <p class="text-center font-bold text-2xl md:text-4xl -mb-[1rem] md:mb-0">
+                My Blogs
+            </p>
+            <div class="encap-trend flex justify-center items-center mx-[1.5rem] sm:mx-[3rem] md:mx-[8rem]">
+                <div class="Trending py-[2rem] px-[1rem] md:px-[2rem] flex justify-center items-center flex-wrap overflow-x-hidden my-[2rem] h-[25rem] md:h-[50rem] w-full bg-gradient-to-tr from-yellow-300 to-blue-300 rounded-2xl"
+                    id="blogs">
+                    <div class="card flex flex-col items-center h-full md:h-[70%] w-full md:w-[80%] lg:w-1/2 bg-white mb-[1rem] rounded-xl"
+                        id="blog">
+                        <img src="/static/c.png" class="image h-[46%] w-full p-2" />
+                        <hr />
+                        <p class="desc text-center text-base md:text-xl text-gray-600 mt-[1rem] mx-[1rem]">
+                            C is a very Beautiful Programming Language. this blog is about C
+                            and how you can leaen C. Check out.
+                        </p>
+                        <button type="submit"
+                            class="h-[2rem] mb-[3rem] md:h-[2.5rem] w-[6.5rem] md:w-[8.5rem] bg-blue-500 mt-[1rem] md:mt-[1.5rem] rounded-xl hover:bg-purple-600">
+                            <a href="/read">
+                                <p class="text-center text-white text-lg">Read Blog</p>
+                            </a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="other-platforms">
+            <p class="text-center font-bold text-2xl md:text-4xl mt-4">
+                Other Platforms
+            </p>
+            <div class="platform flex justify-evenly items-center  w-full h-[10rem]">
+                <a href="https://parthib23.hashnode.dev/"><img src="/static/hashnode.png" alt=""
+                        class="h-[2rem] w-[2rem]"></a>
+                <a href="https://medium.com/@parthibkumardeb"><img src="/static/medium.jpg" alt=""
+                        class="h-[2rem] w-[2rem]"></a>
+                <a href="https://dev.to/parthib_deb23"><img src="/static/dev.jpeg" alt="" class="h-[2rem] w-[2rem]"></a>
+            </div>
+        </div>
+    </main>
+    {% endblock content %}
+    <footer class="flex justify-center items-center w-full  mt-[3rem] h-[50px] text-xl md:text-2xl pb-5">Copyright &copy; Parthib-Writes</footer>
 </body>
-
+<script src="/static/main.js"></script>
 </html>
