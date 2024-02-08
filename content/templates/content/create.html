@@ -1,5 +1,5 @@
 
-{% extends "base.html" %}
+{% extends "content/base.html" %}
 
 {% block title %} Create {% endblock title %}
 
@@ -8,7 +8,7 @@
 <main>
     <div class="Create-Blog mt-5">
         <div class="blog-form h-full w-full py-5 px-2  text-black">
-            <form action="/" method="post"
+            <form action="/blog/" method="post"
                 class="space-y-4 flex justify-center items-center flex-col rounded-lg py-2 border-[1px]  solid border-black shadow-lg shadow-black">
                 {% csrf_token %}
                 <div class="b-title w-[90%] h-[10rem] mt-2  bg-slate-200 p-1 font-extrabold text-xl sm:text-2xl md:text-4xl">

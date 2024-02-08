@@ -1,0 +1,54 @@
+{% load compress %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/templates/style.css" />
+    <title>Parthib-Writes | {% block title %} Register {% endblock title %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    {% compress css %}
+    <link rel="stylesheet" href="/static/output.css">
+    {% endcompress %}
+</head>
+
+<body class="overflow-x-hidden bg-no-repeat bg-center bg-cover bg-gradient-to-br from-black via-purple-500 to-black"
+    style="font-family: Mukta; font-weight: 400;">
+    <!--Header-->
+    {% block users %}
+    <main>
+        <!--User Auth Form-->
+        <div class="encap-auth-form flex justify-center items-center w-full h-[30rem] md:h-[35rem] p-2 ">
+            <div class="auth-form flex flex-col items-center justify-evenly space-y-5 text-white h-full w-full md:w-1/2  rounded-lg backdrop-blur-md bg-white/20">
+                <p class="form-name text-3xl md:text-4xl lg:text-5xl pt-2">User Form</p>
+                <div class="uname sm:text-lg md:text-xl lg:text-2xl flex justify-center items-center space-x-2">
+                    <label for="uname">Username :</label>
+                    <input type="text" name="uname" id="" class="rounded-md text-black pl-2" placeholder="Write Your Username">
+                </div>
+                <div class="email sm:text-lg md:text-xl lg:text-2xl flex justify-center items-center space-x-2">
+                    <label for="email">Email :</label>
+                    <input type="email" name="email" id="" class="rounded-md text-black pl-2" placeholder="Write your Email">
+                </div>
+                <div class="fname sm:text-lg md:text-xl lg:text-2xl flex justify-center items-center space-x-2">
+                    <label for="fname">First Name :</label>
+                    <input type="fname" name="fname" id="" class="rounded-md text-black pl-2" placeholder="Write your first-name">
+                </div>
+                <div class="lname sm:text-lg md:text-xl lg:text-2xl flex justify-center items-center space-x-2">
+                    <label for="lname">Last Name :</label>
+                    <input type="lname" name="lname" id="" class="rounded-md text-black pl-2" placeholder="Write your Last-name">
+                </div>
+                <div class="password sm:text-lg md:text-xl lg:text-2xl flex justify-center items-center space-x-2">
+                    <label for="password">Password :</label>
+                    <input type="password" name="password" id="" class="rounded-md text-black pl-2" placeholder="Write your Last-name">
+                </div>
+                <input type="submit" value="Register" class="w-[5.5rem] h-[2rem] md:w-[6.5rem] md:h-[3rem] md:text-lg lg:text-xl bg-blue-600 rounded-lg hover:bg-green-400">
+            </div>
+        </div>
+    </main>
+    {% endblock users %}
+</body>
+<script src="/templates/main.js"></script>
+
+</html>
