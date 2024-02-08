@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'content',
+    'users',
     'django_browser_reload', #new
     'compressor' #new
 ]
