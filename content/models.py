@@ -1,14 +1,54 @@
 from django.db import models
+from users.models import newUser
+from django.utils.text import slugify
+from blog.settings import AUTH_USER_MODEL
 
 # Create your models here.
 
-class article(models.Model):
-    title = models.TextField()
-    script = models.CharField()
-    likes=models.IntegerField()
-    comments = models.IntegerField()
-    per_comment = models.CharField()
-    date = models.DateField(auto_now=False, auto_now_add=False)
+class articleCreateModel(models.Model):
+    
+    '''
+    This Model is Used to do CRUD operations on blogs. That means this model is entirely
+    dedicated to blog-writer's Tasks. So it is the PARENT MODEL / PARENT TABLE.
+    '''
+    
+    title = models.CharField(unique=True) # Blog Title
+    Catchline = models.TextField(unique=True) # Blog Catchline
+    thumbnail = models.ImageField(upload_to="static/") # Blog Thumbnail
+    script = models.CharField() # Blog Content
+    
+    def __str__(self) -> str:
+        return self.title
+    
+    def save(self,*args, **kwargs):
+        self.title=slugify(self.title)
+        super(articleCreateModel,self).save(*args, **kwargs)
+
+class articleViewModel(models.Model):
+    
+    '''
+    This Model is used to navigate VIEWER'S INTERACTIONS with the blogs. So it is the CHILD MODEL , dependent on
+    its PARENT MODEL. Now ONE blog can be watched and reviewed by MANY viewers, 
+    that's why it has a 1-to-M relationship.
+    
+    But this table has some interesting - it has 2 PARENT - NewUser and articleViewModel. why?
+    Because , only if the USER EXISTS (will locate the username in the parent) and BLOG EXISTS (will locate the blog in the parent)
+    then this Model will work
+    '''
+    
+    CHOICES = (
+        (1,'LIKE'),
+        (-1,'DISLIKE'),
+        (0,'-----')
+    )
+    
+    btitle = models.ForeignKey(articleCreateModel, on_delete=models.CASCADE,db_column='title') # The blog , identified by BLOG-TITLE
+    total_likes=models.IntegerField(default=0)  # Total Liked the blog got (numbers)
+    total_comments = models.IntegerField(default=0)  # Total Comments the blog got (numbers)
+    per_comment = models.CharField(null=True,blank=True) # Individual Comment of viewers
+    per_like = models.IntegerField(null=True,blank=True,choices=CHOICES) # Individual Like of viewers
+    username = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE,db_column='username') # Viewer's identity , got by USERNAME
+    
     
     def __str__(self) -> str:
         return self.title
