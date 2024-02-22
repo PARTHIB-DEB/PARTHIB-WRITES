@@ -8,7 +8,7 @@ from django.core.exceptions import ValidationError
 # Create your views here.
 
 
-# # This set is used for caching by storing usernames locally (maybe will use later)
+# This set is used for caching by storing usernames locally (maybe will use later)
 # filtered_usernames =  newUser.objects.filter(is_superuser=False , is_staff=False).values_list("username",flat=True)
 # registered_users = set(filtered_usernames)
 
@@ -49,7 +49,7 @@ def register(request):
         
     return render(request,'./users/register.html')
     
-
+@login_required(login_url="")
 def logUserIn(request):
     
     '''
@@ -73,13 +73,13 @@ def logUserIn(request):
     return render(request,'./users/login.html')
         
 
-@login_required(login_url="/login/")
+@login_required(login_url="login/")
 def logUserOut(request):
     logout(request)
     return render(request,'./content/base.html')
 
 
-@login_required(login_url="/login/")
+@login_required(login_url="login/")
 def destroy(request):
     '''
     This function is used to Delete user's account.
