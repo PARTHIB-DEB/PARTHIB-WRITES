@@ -12,10 +12,10 @@ class articleCreateModel(models.Model):
     dedicated to blog-writer's Tasks. So it is the PARENT MODEL / PARENT TABLE.
     '''
     
-    title = models.CharField(unique=True) # Blog Title
-    Catchline = models.TextField(unique=True) # Blog Catchline
+    title = models.CharField(unique=True,max_length=60) # Blog Title
+    catchline = models.TextField(unique=True,max_length=60) # Blog Catchline
     thumbnail = models.ImageField(upload_to="static/") # Blog Thumbnail
-    script = models.CharField() # Blog Content
+    script = models.CharField(unique=True) # Blog Content
     
     def __str__(self) -> str:
         return self.title
