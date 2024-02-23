@@ -37,16 +37,15 @@ class articleViewModel(models.Model):
     '''
     
     CHOICES = (
-        (1,'LIKE'),
-        (-1,'DISLIKE'),
-        (0,'-----')
+        ('LIKE',1),
+        ('-----',0)
     )
     
     btitle = models.ForeignKey(articleCreateModel, on_delete=models.CASCADE,db_column='title') # The blog , identified by BLOG-TITLE
     total_likes=models.IntegerField(default=0)  # Total Liked the blog got (numbers)
     total_comments = models.IntegerField(default=0)  # Total Comments the blog got (numbers)
     per_comment = models.CharField(null=True,blank=True) # Individual Comment of viewers
-    per_like = models.IntegerField(null=True,blank=True,choices=CHOICES) # Individual Like of viewers
+    per_like = models.IntegerField(null=True,blank=True,choices=CHOICES,default=0) # Individual Like of viewers
     username = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE,db_column='username') # Viewer's identity , got by USERNAME
     
     
