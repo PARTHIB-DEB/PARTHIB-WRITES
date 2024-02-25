@@ -34,24 +34,26 @@ def createBlog (request):
     return render(request, './content/create.html')
 
 @login_required(login_url="login/")
-def readBlog(request,uname,pk):
+def readBlog(request):
     
-    '''
-    A function which is used to read a blog.
-    '''
-    btitle = articleCreateModel.objects.filter(title=pk).title
-    username = newUser.objects.filter(username=uname).username
-    tcomments = articleViewModel.objects.values_list("per_comment",flat=True).count()
-    tlikes = articleViewModel.objects.filter(per_like = 1).values_list("per_like",flat=True).count()
-    read_blog = articleViewModel.objects.create(
-		btitle = btitle,
-        total_likes = tlikes,
-        total_comments = tcomments,
-		username = username
-	)
-    read_blog.save(force_insert=True)
-    blog_obj = {"blog":articleCreateModel.objects.get(title=pk)}
-    return render(request, './content/read.html',blog_obj)
+    # '''
+    # A function which is used to read a blog.
+    # '''
+    # btitle = articleCreateModel.objects.filter(title=pk).title
+    # username = newUser.objects.filter(username=uname).username
+    # tcomments = articleViewModel.objects.values_list("per_comment",flat=True).count()
+    # tlikes = articleViewModel.objects.filter(per_like = 1).values_list("per_like",flat=True).count()
+    # read_blog = articleViewModel.objects.create(
+	# 	btitle = btitle,
+    #     total_likes = tlikes,
+    #     total_comments = tcomments,
+	# 	username = username
+	# )
+    # read_blog.save(force_insert=True)
+    # blog_obj = {"blog":articleCreateModel.objects.get(title=pk)}
+    # return render(request, './content/read.html',blog_obj)
+    return render(request, './content/read.html')
+    pass
 
 @login_required(login_url="login/")
 def updateBlog(request,pk):
@@ -85,7 +87,7 @@ def updateBlog(request,pk):
             return render(request, './content/base.html')
         else:
             return render(request, './content/create.html')
-    return render(request, './content/read.html',upd_obj) # Change this template
+    return render(request, './content/update.html',upd_obj) # Change this template
 
 @login_required(login_url="login/")
 def deleteBlog(request,pk):

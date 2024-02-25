@@ -1,6 +1,6 @@
 {% extends "content/base.html" %}
 
-{% block title %} Read Blog  {% endblock title %}
+{% block title %} Read Blog {% endblock title %}
 
 {% block content %}
 
@@ -9,6 +9,13 @@
     <div class="read-blog w-full flex justify-center items-center flex-col px-8 mt-5 text-black">
         <img src="/static/card.png" alt="" srcset=""
             class="-mt-[2rem] md:-mt-[6rem] w-auto h-auto border-2 solid border-green-400" />
+        <div class="like-comment flex justify-center space-x-4 items-center  h-[2.2rem] w-[14rem]  mt-[1rem]">
+            <p class="text-base md:text-xl hover:font-bold">Like</p>
+            <p class="text-base md:text-xl hover:font-bold">|</p>
+            <a href="comment.html">
+                <p class="text-base md:text-xl hover:font-bold">Comment</p>
+            </a>
+        </div>
         <div class="description flex flex-col mt-5 items-center justify-center w-full h-auto bg-white rounded-lg">
             <p class="b-desc-show text-xl sm:text-2xl md:text-4xl text-center mt-5">
                 Blog Description
@@ -22,5 +29,5 @@
         </div>
     </div>
 </main>
-  
+
 {% endblock content %}

@@ -1,13 +1,15 @@
-from django.forms import ModelForm , forms
+from django.forms import ModelForm 
+from django import forms
 from .models import *
+from django import forms
 
 class articleForm(ModelForm):
     class Meta:
         model = articleCreateModel
         fields = "__all__"
 
-class DeleteArticleForm(forms):
-    question = forms.forms.CharField(max_length=True)
+class DeleteArticleForm(forms.Form):
+    question = forms.CharField(label="question",max_length=3)
     
 class LikeCommentForm(ModelForm):
     class Meta:
