@@ -1,0 +1,24 @@
+{% extends "users/register.html" %}
+
+{% block title %}
+Login
+{% endblock title %}
+
+
+{% block users %}
+<main>
+    <div class="encap-login-card flex justify-center items-center w-full h-[30rem] py-[2.5rem]  md:h-[35rem] px-[1rem] md:px-0 bg-transparent">
+        <div class="login-card h-full w-full md:w-[50%] rounded-lg bg-black/50 flex flex-col items-center justify-evenly p-[0.5rem]">
+            <p class="name-login text-2xl md:text-3xl underline text-center">Login Form</p>
+            <form action="{% url "" %}" method="post" class="flex flex-col items-center justify-evenly w-full p-[1rem]">
+                <label for="username" class="md:text-2xl lg:text-3xl text-center pb-[1rem]">Username :</label>
+                <input type="text" name="username" class="bg-slate-300 mx-[1rem] h-[2rem] md:h-[3rem] w-full rounded-lg md:text-2xl lg:text-3xl text-center mb-5" placeholder="Username">
+                <label for="Password" class="md:text-2xl lg:text-3xl text-center pb-[1rem]">Password :</label>
+                <input type="password" name="password" class="bg-slate-300 mx-[1rem] h-[2rem] md:h-[3rem] w-full rounded-lg md:text-2xl lg:text-3xl text-center" placeholder="password">
+            </form>
+            <button type="submit" class="bg-blue-400 hover:bg-green-400 text-center h-[2rem] w-[5.5rem] rounded-lg md:h-[3rem] md:w-[7.5rem] md:text-2xl">Submit</button>
+        </div>
+    </div>
+</main>
+  
+{% endblock users %}

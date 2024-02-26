@@ -56,6 +56,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'blog.urls'
 # APPEND_SLASH = False
+# SESSION_COOKIE_ADMIN ="http://127.0.0.1:8000"
+
 
 TEMPLATES = [
     {
@@ -83,7 +85,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'personal_blog',
-        'USER': 'pk',
+        'USER': 'pkdeb',
         'PASSWORD': 'pkblog',
         'HOST': '127.0.0.1',
         'PORT': '5432',
@@ -92,6 +94,7 @@ DATABASES = {
 
 # Registering My custom User Model
 AUTH_USER_MODEL = 'users.newUser'
+
 
 
 # Password validation

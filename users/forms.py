@@ -14,6 +14,14 @@ class UserForm(UserCreationForm):
         if password1 and password2 and password1 != password2:
             raise ValidationError("Passwords don't match")
         return password2
+    
+    def save(self, commit=True):
+        # Save the provided password in hashed format
+        user = super().save()
+        user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+        return user
 
 class LoginForm(ModelForm):
     class Meta:

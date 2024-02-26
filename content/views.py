@@ -7,11 +7,30 @@ from users.models import *
 
 # Create your views here.
 
-@login_required(login_url="login/")
-def home(request):
-	return render(request, './content/base.html')
+# print(articleCreateModel.objects.all())
 
-@login_required(login_url="login/")
+
+# obj = newUser.objects.values_list("username",flat=True)
+# print(obj)
+# context={"obj":newUser.objects.all()}
+# print(context['obj'][0])
+
+
+@login_required(login_url="login")
+def home(request):
+    title = articleCreateModel.objects.values_list("title",flat=True)
+    username = newUser.objects.values_list("username",flat=True)
+    mixed_dict={}
+    i=0
+    j=0
+    while(i<=len(title)-1 and j<=len(username)-1):
+        mixed_dict[title[i]] = username[j]
+        i+=1
+        j+=1
+    print(mixed_dict)
+    return render(request, './content/base.html',mixed_dict)
+
+@login_required(login_url="login")
 def createBlog (request):
     '''
     A function which is used to create a new blog.
@@ -33,29 +52,28 @@ def createBlog (request):
             return render(request, './content/create.html')
     return render(request, './content/create.html')
 
-@login_required(login_url="login/")
-def readBlog(request):
+@login_required(login_url="login")
+def readBlog(request,username,title):
     
-    # '''
-    # A function which is used to read a blog.
-    # '''
-    # btitle = articleCreateModel.objects.filter(title=pk).title
-    # username = newUser.objects.filter(username=uname).username
-    # tcomments = articleViewModel.objects.values_list("per_comment",flat=True).count()
-    # tlikes = articleViewModel.objects.filter(per_like = 1).values_list("per_like",flat=True).count()
-    # read_blog = articleViewModel.objects.create(
-	# 	btitle = btitle,
-    #     total_likes = tlikes,
-    #     total_comments = tcomments,
-	# 	username = username
-	# )
-    # read_blog.save(force_insert=True)
-    # blog_obj = {"blog":articleCreateModel.objects.get(title=pk)}
-    # return render(request, './content/read.html',blog_obj)
-    return render(request, './content/read.html')
-    pass
+    '''
+    A function which is used to read a blog.
+    '''
+    btitle = articleCreateModel.objects.filter(title=title).title
+    username = newUser.objects.filter(username=uname).username
+    tcomments = articleViewModel.objects.values_list("per_comment",flat=True).count()
+    tlikes = articleViewModel.objects.filter(per_like = 1).values_list("per_like",flat=True).count()
+    read_blog = articleViewModel.objects.create(
+		btitle = btitle,
+        total_likes = tlikes,
+        total_comments = tcomments,
+		username = username
+	)
+    read_blog.save(force_insert=True)
+    blog_obj = {"blog":articleCreateModel.objects.get(title=title)}
+    return render(request, './content/read.html',blog_obj)
 
-@login_required(login_url="login/")
+
+@login_required(login_url="login")
 def updateBlog(request,pk):
     
     '''
@@ -89,7 +107,7 @@ def updateBlog(request,pk):
             return render(request, './content/create.html')
     return render(request, './content/update.html',upd_obj) # Change this template
 
-@login_required(login_url="login/")
+@login_required(login_url="login")
 def deleteBlog(request,pk):
     
     '''
@@ -108,7 +126,7 @@ def deleteBlog(request,pk):
     return render(request,'./content/base.html')
 
 
-@login_required(login_url="login/")
+@login_required(login_url="login")
 def per_like_comment_fn(request,pk):
     form = LikeCommentForm()
     if request.method == "POST":

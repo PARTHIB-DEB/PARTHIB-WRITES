@@ -1,6 +1,5 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser ,BaseUserManager
 from django.db import models
-from django.contrib.auth.models import BaseUserManager
 
 class newUserManager(BaseUserManager):
     def create_user(self, username, email, password):
@@ -26,15 +25,12 @@ class newUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, username, password,email):
+    def create_superuser(self, username, password,email=None):
         """
         Overring this method - it just makes a normal user / customer.
         """
         if not username:
             raise ValueError("Must have one UNIQUE Username")
-        
-        if not email:
-            raise ValueError("Must have one Email")
         
         if not password:
             raise ValueError("Must have one UNIQUE Password")
@@ -43,9 +39,12 @@ class newUserManager(BaseUserManager):
         user = self.model(
             username = username,
             email=self.normalize_email(email),
-            password = password
+            password = password,
+            is_staff = True,
+            is_superuser = True,
+            is_active = True,
         )
-        user.is_admin = True
+        user.is_admin =True
         user.save(using=self._db)
         return user
 

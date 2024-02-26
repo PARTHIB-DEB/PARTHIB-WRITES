@@ -49,7 +49,7 @@ def register(request):
         
     return render(request,'./users/register.html')
     
-@login_required(login_url="")
+@login_required(login_url="/")
 def logUserIn(request):
     
     '''
@@ -73,13 +73,13 @@ def logUserIn(request):
     return render(request,'./users/login.html')
         
 
-@login_required(login_url="login/")
+@login_required(login_url="/login/")
 def logUserOut(request):
     logout(request)
     return render(request,'./content/base.html')
 
 
-@login_required(login_url="login/")
+@login_required(login_url="/login/")
 def destroy(request):
     '''
     This function is used to Delete user's account.

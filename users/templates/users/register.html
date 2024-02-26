@@ -13,14 +13,15 @@
     {% endcompress %}
 </head>
 
-<body class="overflow-x-hidden bg-no-repeat bg-center bg-cover bg-gradient-to-br from-black via-purple-500 to-black"
+<body class="overflow-x-hidden bg-no-repeat bg-center bg-cover bg-gradient-to-br bg-white"
     style="font-family: Mukta; font-weight: 400;">
     <!--Header-->
     {% block users %}
     <main>
         <!--User Auth Form-->
         <div class="encap-auth-form flex justify-center items-center w-full h-[30rem] md:h-[35rem] p-2 ">
-            <div class="auth-form flex flex-col items-center justify-evenly space-y-5 text-white h-full w-full md:w-1/2  rounded-lg backdrop-blur-md bg-white/20">
+            <form method="post" action="{% url "home" %}" class="auth-form flex flex-col items-center justify-evenly space-y-5 text-white h-full w-full md:w-1/2  rounded-lg backdrop-blur-md bg-black/50">
+                {% csrf_token %}
                 <p class="form-name text-3xl md:text-4xl lg:text-5xl pt-2">User Form</p>
                 <div class="uname sm:text-lg md:text-xl lg:text-2xl flex justify-center items-center space-x-2">
                     <label for="username">Username :</label>
@@ -47,7 +48,7 @@
                     <input type="password" name="password2" id="" class="rounded-md text-black pl-2" placeholder="Confirm Password">
                 </div>
                 <input type="submit" value="Register" class="w-[5.5rem] h-[2rem] md:w-[6.5rem] md:h-[3rem] md:text-lg lg:text-xl bg-blue-600 rounded-lg hover:bg-green-400">
-            </div>
+            </form>
         </div>
     </main>
     {% endblock users %}

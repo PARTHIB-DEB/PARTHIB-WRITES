@@ -21,12 +21,11 @@
 
 <body class="overflow-x-hidden bg-no-repeat text-black font-normal"
     style="font-family: Mukta; font-weight: 400;">
-    <header class="py-[1.2rem] w-full md:mb-[3rem]" style="padding-top:2.5rem; --tw-bg-opacity: 1;
-    background-color: rgb(156 163 175 / var(--tw-bg-opacity));">
+    <header class="py-[1.2rem] w-full md:mb-[3rem]" style="padding-top:2.5rem; --tw-bg-opacity: 1; background-color: rgb(156 163 175 / var(--tw-bg-opacity));">
         <!--Small Navbar-->
         <div class="small-navbar w-auto px-[1.5rem] md:hidden hover:cursor-pointer" id="smallnav">
             <div class="nav-ham flex items-center justify-between text-xl ">
-                <a href="/blogs">
+                <a href="{% url "home" %}">
                     <p class="site-name hover:cursor-pointer " id="site-name" style="filter:drop-shadow(1px 1px 1px white);">
                         <i>Parthib-Writes</i>
                     </p>
@@ -51,7 +50,7 @@
                     <p class="cat hover:cursor-pointer">Courses</p>
                     <button type="submit"
                         class="h-[2rem] w-[8rem] md:w-[8.5rem] bg-blue-500 rounded-xl hover:bg-purple-600">
-                        <a href="/blogs/create-blog>
+                        <a href="{% url "create" %}">
                             <p class="text-center text-white text-lg">Create Blog</p>
                         </a>
                     </button>
@@ -60,7 +59,7 @@
         </div>
         <!--Large Navbar + all menus-->
         <div class="large-navbar hidden md:flex justify-evenly items-centers text-xl">
-            <a href="/blogs">
+            <a href="{% url "home" %}">
                 <p class="site-name hover:cursor-pointer " id="site-name" style="filter:drop-shadow(1px 1px 1px white);">
                     <i>Parthib-Writes</i>
                 </p>
@@ -70,7 +69,7 @@
             <p class="cat hover:cursor-pointer" style="filter:drop-shadow(1px 1px 1px white);">Courses</p>
             <button type="submit"
                 class="h-[2rem] md:h-[2.2rem] w-[6.5rem] md:w-[8.5rem] bg-blue-500 rounded-xl hover:bg-purple-600">
-                <a href="/blogs/create-blog">
+                <a href="{% url "create" %}">
                     <p class="text-center text-white text-lg">Create Blog</p>
                 </a>
             </button>
@@ -103,12 +102,13 @@
                             C is a very Beautiful Programming Language. this blog is about C
                             and how you can leaen C. Check out.
                         </p>
-                        <button type="submit"
-                            class="h-[2rem] mb-[3rem] md:h-[2.5rem] w-[6.5rem] md:w-[8.5rem] bg-blue-500 mt-[1rem] md:mt-[1.5rem] rounded-xl hover:bg-purple-600">
-                            <a href="/blogs/read-blog">
+                        {% for title , username in context %}
+                        <button type="submit" class="h-[2rem] mb-[3rem] md:h-[2.5rem] w-[6.5rem] md:w-[8.5rem] bg-blue-500 mt-[1rem] md:mt-[1.5rem] rounded-xl hover:bg-purple-600">
+                            <a href="{% url "read" username=username title=title %}">
                                 <p class="text-center text-white text-lg">Read Blog</p>
                             </a>
                         </button>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
