@@ -9,8 +9,9 @@ from django.core.exceptions import ValidationError
 
 
 # This set is used for caching by storing usernames locally (maybe will use later)
-# filtered_usernames =  newUser.objects.filter(is_superuser=False , is_staff=False).values_list("username",flat=True)
+# filtered_usernames =  newUser.objusers.values_list("username",flat=True)
 # registered_users = set(filtered_usernames)
+# print(registered_users)
 
 
 def register(request):
@@ -28,20 +29,20 @@ def register(request):
             username = user_datas['username']
             email = user_datas['email']
             
-            if newUser.objects.filter(usename = username).count()>0: # Checking if the username exists in Db
+            if newUser.objusers.filter(usename = username).count()>0: # Checking if the username exists in Db
                 raise ValidationError("USERNAME must be UNIQUE")
             
-            if newUser.objects.filter(email = email).count()>0: # Checking if the email exists in Db
+            if newUser.objusers.filter(email = email).count()>0: # Checking if the email exists in Db
                 raise ValidationError("EMAIL must be UNIQUE")
             
-            if newUser.objects.filter(password = password).count()>0: # Checking if the password exists in Db
+            if newUser.objusers.filter(password = password).count()>0: # Checking if the password exists in Db
                 raise ValidationError("PASSWORD must be UNIQUE")
             
-            user_obj = newUser.objects.create_user(username=username,email=email,password=password)
+            user_obj = newUser.objusers.create_user(username=username,email=email,password=password)
             user_obj.first_name = user_datas['username']
             user_obj.last_name = user_datas['last_name']
+            form.save()
             # registered_users.add(user_obj.username)
-            
             login(request,user_obj) # for absolutely new users , logging them in automatically
             return render(request,'./content/base.html')
         
@@ -91,7 +92,7 @@ def destroy(request):
             user_datas = form.cleaned_data
             response = list(user_datas['question']) # To check if user's response is the expected one or not
             if ((response[0]=="Y" or response[0]=="y") and (response[1]=="e" or response[1]=="E") and (response[2]=="S" or response[2]=="s") and len(response)==3):
-                del_obj = newUser.objects.filter(usename=user_datas['username'] , password=user_datas['password'])
+                del_obj = newUser.objusers.filter(usename=user_datas['username'] , password=user_datas['password'])
                 # registered_users.remove(user_datas['username'])
                 del_obj.delete()
                 return render(request,'./users/register.html')

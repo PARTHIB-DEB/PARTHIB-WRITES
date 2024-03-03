@@ -6,6 +6,10 @@ class newUserManager(BaseUserManager):
         """
         Overring this method - it just makes a normal user / customer.
         """
+        username = "".join(str(username).split(" "))
+        email = "".join(str(email).split(" "))
+        password = "".join(str(password).split(" "))
+        
         if not username:
             raise ValueError("Must have one Username")
         
@@ -25,12 +29,20 @@ class newUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, username, password,email=None):
+    def create_superuser(self, username, email ,password):
         """
-        Overring this method - it just makes a normal user / customer.
+        Overring this method - it just makes a Superuser.
         """
+        
+        username = "".join(str(username).split(" "))
+        email = "".join(str(email).split(" "))
+        password = "".join(str(password).split(" "))
+        
         if not username:
             raise ValueError("Must have one UNIQUE Username")
+        
+        if not email:
+            raise ValueError("Must have one Email")
         
         if not password:
             raise ValueError("Must have one UNIQUE Password")
@@ -63,7 +75,8 @@ class newUser (AbstractUser):
     
     REQUIRED_FIELDS = ["email"]
     
-    objects = newUserManager()
+    objusers = newUserManager()
+    # objects = newUserManager()
     
     def __str__(self) -> str:
         return self.username
