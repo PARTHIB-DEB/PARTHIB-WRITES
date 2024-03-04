@@ -7,4 +7,5 @@ urlpatterns = [
     path('read-blog/<str:username>/<str:title>/',readBlog,name="read"),
     path('update-blog/<str:pk>/',updateBlog,name="update"),
     path('delete-blog/<str:pk>/',deleteBlog,name="delete"),
+    path('profile/',profile,name="profile"),
 ]

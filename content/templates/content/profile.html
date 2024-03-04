@@ -1,0 +1,41 @@
+{% extends "content/base.html" %}
+
+{% block title %}
+Profile
+{% endblock title %}
+
+{% block content %}
+
+<main class="h-[50rem] w-full flex justify-center items-center py-[2rem] px-[1rem] md:px-[6rem] lg:">
+    <div class="profile-card text-xl md:text-2xl lg:text-3xl font-bold h-full w-full rounded-xl shadow-black shadow-xl flex flex-col items-center justify-evenly">
+        <div class="image h-[6rem] w-[8rem] md:h-[10rem] md:w-[12rem] rounded-xl bg-red-600 shadow-xl shadow-black"></div>
+        <p class="text-2xl md:text-3xl lg:text-4xl">Profile Details</p>
+        <div class="username flex justify-center space-x-4 items-center h-[5%] w-[90%]">
+            <p class="label-username">Username :</p>
+            <p class="value-username">Username </p>
+        </div>
+        <div class="email flex justify-center space-x-4 items-center h-[5%] w-[90%]">
+            <p class="label-email">email :</p>
+            <p class="value-email">email </p>
+        </div>
+        <div class="First-Name flex justify-center space-x-4 items-center h-[5%] w-[90%]">
+            <p class="label-fname">First-Name :</p>
+            <p class="value-fname">First-Name </p>
+        </div>
+        <div class="Last-Name flex justify-center space-x-4 items-center h-[5%] w-[90%]">
+            <p class="label-lname">Last-Name :</p>
+            <p class="value-lname">Last-Name </p>
+        </div>
+        <div class="Password flex justify-center space-x-4 items-center h-[5%] w-[90%]">
+            <p class="label-password">Password :</p>
+            <p class="value-password">Password </p>
+        </div>
+        <div class="option-btns flex justify-center md:text-2xl space-x-4 items-center h-[5%] w-[90%]">
+            <button type="submit" class="h-[2.5rem] w-[5rem] md:h-[3.5rem] md:w-[8rem] text-center p-2 rounded-xl bg-purple-700 hover:bg-green-500">Update</button>
+            <button type="submit" class="h-[2.5rem] w-[5rem] md:h-[3.5rem] md:w-[8rem] text-center p-2 rounded-xl bg-orange-700 hover:bg-yellow-500">Logout</button>
+            <button type="submit" class="h-[2.5rem] w-[5rem] md:h-[3.5rem] md:w-[8rem] text-center p-2 rounded-xl bg-red-500 hover:bg-red-800">Signout</button>
+        </div>
+    </div>
+</main>
+  
+{% endblock content %}

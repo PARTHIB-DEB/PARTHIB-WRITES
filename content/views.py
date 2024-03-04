@@ -15,15 +15,11 @@ from users.models import *
 # context={"obj":newUser.objects.all()}
 # print(context['obj'][0])
 
-title = articleCreateModel.objects.values_list("title",flat=True)
-username = articleViewModel.objects.values_list("username",flat=True).filter(btitle for btitle in title)
-print(username)
-
 
 @login_required(login_url="login")
 def home(request):
     title = articleCreateModel.objects.values_list("title",flat=True)
-    username = articleViewModel.objects.values_list("username",flat=True).filter(btitle = title)
+    username = newUser.objects.values_list("username",flat=True)
     mixed_dict={}
     i=0
     j=0
@@ -63,7 +59,7 @@ def readBlog(request,username,title):
     A function which is used to read a blog.
     '''
     btitle = articleCreateModel.objects.filter(title=title).title
-    username = newUser.objects.filter(username=username).username
+    username = newUser.objects.filter(username=uname).username
     tcomments = articleViewModel.objects.values_list("per_comment",flat=True).count()
     tlikes = articleViewModel.objects.filter(per_like = 1).values_list("per_like",flat=True).count()
     read_blog = articleViewModel.objects.create(
@@ -147,3 +143,8 @@ def per_like_comment_fn(request,pk):
             return render(request,'./content/base.html')
         return render(request,'./content/base.html')
     return render(request,'./content/comment.html',{"form":form})
+
+
+@login_required(login_url="login")
+def profile(request):
+    return render(request, './content/profile.html')
