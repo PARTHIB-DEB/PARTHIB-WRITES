@@ -95,16 +95,15 @@
                 <div class="Trending py-[2rem] px-[1rem] md:px-[2rem] flex justify-center items-center flex-wrap overflow-x-hidden my-[2rem] h-[25rem] md:h-[50rem] w-full bg-gradient-to-tr from-yellow-300 to-blue-300 rounded-2xl"
                     id="blogs">
                     <div class="card flex flex-col items-center h-full md:h-[70%] w-full md:w-[80%] lg:w-1/2 bg-white mb-[1rem] rounded-xl"
-                        id="blog">
-                        <img src="/static/c.png" class="image h-[46%] w-full p-2" />
+                    id="blog">
+                    {% for items in context %}
+                        <img src="{{items.thumbnail}}" class="image h-[46%] w-full p-2" />
                         <hr />
                         <p class="desc text-center text-base md:text-xl text-gray-600 mt-[1rem] mx-[1rem]">
-                            C is a very Beautiful Programming Language. this blog is about C
-                            and how you can leaen C. Check out.
+                            {{items.catchline}}
                         </p>
-                        {% for title , username in context %}
                         <button type="submit" class="h-[2rem] mb-[3rem] md:h-[2.5rem] w-[6.5rem] md:w-[8.5rem] bg-blue-500 mt-[1rem] md:mt-[1.5rem] rounded-xl hover:bg-purple-600">
-                            <a href="{% url "read" username=username title=title %}">
+                            <a href="{% url "read" title="{{items.title}}" %}">
                                 <p class="text-center text-white text-lg">Read Blog</p>
                             </a>
                         </button>

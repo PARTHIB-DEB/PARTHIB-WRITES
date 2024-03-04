@@ -4,12 +4,19 @@ from django.contrib.auth import login ,authenticate , logout
 from django.contrib.auth.decorators import login_required
 from .models import newUser
 from django.core.exceptions import ValidationError
+from django.core.mail import send_mail
+from dotenv import load_dotenv
+import os
+
+Sender_Email = os.getenv("EMAIL_HOST_USER")
+Sender_Email_Password = os.getenv("SUPABASE_HOST")
+
 
 # Create your views here.
 
 
 # This set is used for caching by storing usernames locally (maybe will use later)
-# filtered_usernames =  newUser.objusers.values_list("username",flat=True)
+# filtered_usernames =  newUser.objects.values_list("username",flat=True)
 # registered_users = set(filtered_usernames)
 # print(registered_users)
 
@@ -26,22 +33,22 @@ def register(request):
         if form.is_valid():
             password = form.clean_password2() # check if raw and confirm password are same or not
             user_datas = form.cleaned_data
+            print(user_datas)
             username = user_datas['username']
             email = user_datas['email']
             
-            if newUser.objusers.filter(usename = username).count()>0: # Checking if the username exists in Db
+            if newUser.objects.filter(username = username).count()>0: # Checking if the username exists in Db
                 raise ValidationError("USERNAME must be UNIQUE")
             
-            if newUser.objusers.filter(email = email).count()>0: # Checking if the email exists in Db
+            if newUser.objects.filter(email = email).count()>0: # Checking if the email exists in Db
                 raise ValidationError("EMAIL must be UNIQUE")
             
-            if newUser.objusers.filter(password = password).count()>0: # Checking if the password exists in Db
+            if newUser.objects.filter(password = password).count()>0: # Checking if the password exists in Db
                 raise ValidationError("PASSWORD must be UNIQUE")
             
-            user_obj = newUser.objusers.create_user(username=username,email=email,password=password)
-            user_obj.first_name = user_datas['username']
-            user_obj.last_name = user_datas['last_name']
-            form.save()
+            user_obj = newUser.objects.create_user(username=username,email=email,password=password)
+            newUser.objects.filter(username=user_datas['username']).update(first_name=user_datas['first_name'] , last_name = user_datas['last_name'])
+            send_email_to_user(request,sender_email=Sender_Email,receiver_email=user_obj.email)
             # registered_users.add(user_obj.username)
             login(request,user_obj) # for absolutely new users , logging them in automatically
             return render(request,'./content/base.html')
@@ -49,6 +56,13 @@ def register(request):
         return render(request,'./users/register.html')
         
     return render(request,'./users/register.html')
+
+def send_email_to_user(request ,sender_email,receiver_email): 
+    subject = "ACCCOUNT VERIFICATION"
+    content = "If you find this mail then your account is verified,No click on http://127.0.0.1:8000/profile/"
+    sender_email=sender_email
+    receiver_email=receiver_email
+    send_mail(subject, content, sender_email, recipient_list=[receiver_email,], fail_silently=False)
     
 @login_required(login_url="/")
 def logUserIn(request):
@@ -74,13 +88,13 @@ def logUserIn(request):
     return render(request,'./users/login.html')
         
 
-@login_required(login_url="/login/")
+@login_required(login_url="login/")
 def logUserOut(request):
     logout(request)
     return render(request,'./content/base.html')
 
 
-@login_required(login_url="/login/")
+@login_required(login_url="login/")
 def destroy(request):
     '''
     This function is used to Delete user's account.
@@ -92,7 +106,7 @@ def destroy(request):
             user_datas = form.cleaned_data
             response = list(user_datas['question']) # To check if user's response is the expected one or not
             if ((response[0]=="Y" or response[0]=="y") and (response[1]=="e" or response[1]=="E") and (response[2]=="S" or response[2]=="s") and len(response)==3):
-                del_obj = newUser.objusers.filter(usename=user_datas['username'] , password=user_datas['password'])
+                del_obj = newUser.objects.filter(usename=user_datas['username'] , password=user_datas['password'])
                 # registered_users.remove(user_datas['username'])
                 del_obj.delete()
                 return render(request,'./users/register.html')
@@ -102,4 +116,9 @@ def destroy(request):
         return render(request,'./content/base.html')
     
     return render(request,'./content/base.html')
-        
+
+
+@login_required(login_url="login/")
+def profile(request):
+    context = {"items":newUser.objects.all()}
+    return render(request, './content/profile.html',context)

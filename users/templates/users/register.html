@@ -20,32 +20,32 @@
     <main>
         <!--User Auth Form-->
         <div class="encap-auth-form flex justify-center items-center w-full h-[30rem] md:h-[35rem] p-2 ">
-            <form method="post" action="{% url "home" %}" class="auth-form flex flex-col items-center justify-evenly space-y-5 text-white h-full w-full md:w-1/2  rounded-lg backdrop-blur-md bg-black/50">
+            <form method="post" class="auth-form flex flex-col items-center justify-evenly space-y-5 text-white h-full w-full md:w-1/2  rounded-lg backdrop-blur-md bg-black/50">
                 {% csrf_token %}
                 <p class="form-name text-3xl md:text-4xl lg:text-5xl pt-2">User Form</p>
                 <div class="uname sm:text-lg md:text-xl lg:text-2xl flex justify-center items-center space-x-2">
                     <label for="username">Username :</label>
-                    <input type="text" name="username" id="" class="rounded-md text-black pl-2" placeholder="Write Your Username">
+                    <input type="text" name="username" id="username" class="rounded-md text-black pl-2" placeholder="Write Your Username">
                 </div>
                 <div class="email sm:text-lg md:text-xl lg:text-2xl flex justify-center items-center space-x-2">
                     <label for="email">Email :</label>
-                    <input type="email" name="email" id="" class="rounded-md text-black pl-2" placeholder="Write your Email">
+                    <input type="email" name="email" id="email" class="rounded-md text-black pl-2" placeholder="Write your Email">
                 </div>
                 <div class="fname sm:text-lg md:text-xl lg:text-2xl flex justify-center items-center space-x-2">
                     <label for="first_name">First Name :</label>
-                    <input type="text" name="first_name" id="" class="rounded-md text-black pl-2" placeholder="Write your first-name">
+                    <input type="text" name="first_name" id="first_name" class="rounded-md text-black pl-2" placeholder="Write your first-name">
                 </div>
                 <div class="lname sm:text-lg md:text-xl lg:text-2xl flex justify-center items-center space-x-2">
                     <label for="last_name">Last Name :</label>
-                    <input type="text" name="last_name" id="" class="rounded-md text-black pl-2" placeholder="Write your Last-name">
+                    <input type="text" name="last_name" id="last_name" class="rounded-md text-black pl-2" placeholder="Write your Last-name">
                 </div>
                 <div class="pass sm:text-lg md:text-xl lg:text-2xl flex justify-center items-center space-x-2">
                     <label for="password1">Pass :</label>
-                    <input type="password" name="password1" id="" class="rounded-md text-black pl-2" placeholder="Write Strong Passsword">
+                    <input type="password" name="password1" id="password1" class="rounded-md text-black pl-2" placeholder="Write Strong Passsword">
                 </div>
                 <div class="pass sm:text-lg md:text-xl lg:text-2xl flex justify-center items-center space-x-2">
                     <label for="password2">Confirm Pass:</label>
-                    <input type="password" name="password2" id="" class="rounded-md text-black pl-2" placeholder="Confirm Password">
+                    <input type="password" name="password2" id="password2" class="rounded-md text-black pl-2" placeholder="Confirm Password">
                 </div>
                 <input type="submit" value="Register" class="w-[5.5rem] h-[2rem] md:w-[6.5rem] md:h-[3rem] md:text-lg lg:text-xl bg-blue-600 rounded-lg hover:bg-green-400">
             </form>

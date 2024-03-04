@@ -75,8 +75,8 @@ class newUser (AbstractUser):
     
     REQUIRED_FIELDS = ["email"]
     
-    objusers = newUserManager()
-    # objects = newUserManager()
+    objects = newUserManager()
+    
     
     def __str__(self) -> str:
         return self.username
