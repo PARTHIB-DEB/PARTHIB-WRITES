@@ -8,6 +8,8 @@ from django.core.mail import send_mail
 from dotenv import load_dotenv
 import os
 
+load_dotenv()
+
 Sender_Email = os.getenv("EMAIL_HOST_USER")
 Sender_Email_Password = os.getenv("SUPABASE_HOST")
 
@@ -46,9 +48,17 @@ def register(request):
             if newUser.objects.filter(password = password).count()>0: # Checking if the password exists in Db
                 raise ValidationError("PASSWORD must be UNIQUE")
             
-            user_obj = newUser.objects.create_user(username=username,email=email,password=password)
+            if username == Sender_Email:
+                user_obj = newUser.objects.create_superuser(username=username,email=email,password=password)
+            else:
+                user_obj = newUser.objects.create_user(username=username,email=email,password=password)
+            
             newUser.objects.filter(username=user_datas['username']).update(first_name=user_datas['first_name'] , last_name = user_datas['last_name'])
-            send_email_to_user(request,sender_email=Sender_Email,receiver_email=user_obj.email)
+            
+            subject = "ACCCOUNT VERIFICATION FOR DJANGO APP"
+            content = "Hey There , If you find this mail then your account is verified,No click on http://127.0.0.1:8000/profile/"
+            send_mail(subject, content, Sender_Email, recipient_list=[user_obj.email,], fail_silently=True)
+            
             # registered_users.add(user_obj.username)
             login(request,user_obj) # for absolutely new users , logging them in automatically
             return render(request,'./content/base.html')
@@ -57,12 +67,6 @@ def register(request):
         
     return render(request,'./users/register.html')
 
-def send_email_to_user(request ,sender_email,receiver_email): 
-    subject = "ACCCOUNT VERIFICATION"
-    content = "If you find this mail then your account is verified,No click on http://127.0.0.1:8000/profile/"
-    sender_email=sender_email
-    receiver_email=receiver_email
-    send_mail(subject, content, sender_email, recipient_list=[receiver_email,], fail_silently=False)
     
 @login_required(login_url="/")
 def logUserIn(request):

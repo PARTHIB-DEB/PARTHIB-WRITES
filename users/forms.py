@@ -6,7 +6,7 @@ from django import forms
 class UserForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = newUser
-        fields = UserCreationForm.Meta.fields + ("email",)
+        fields = UserCreationForm.Meta.fields + ("email","first_name","last_name",)
     
     def clean_password2(self) -> str:
         password1 = self.cleaned_data.get("password1")
@@ -15,13 +15,6 @@ class UserForm(UserCreationForm):
             raise ValidationError("Passwords don't match")
         return password2
     
-    def save(self, commit=True):
-        # Save the provided password in hashed format
-        user = super().save()
-        user.set_password(self.cleaned_data["password1"])
-        if commit:
-            user.save()
-        return user
 
 class LoginForm(ModelForm):
     class Meta:
