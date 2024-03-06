@@ -12,7 +12,7 @@ from users.models import *
 
 @login_required(login_url="login")
 def home(request):
-    context = {"items":articleCreateModel.objects.all()}
+    context = {"blogs":articleCreateModel.objects.all()}
     return render(request, './content/base.html',context)
 
 @login_required(login_url="login")
@@ -21,7 +21,7 @@ def createBlog (request):
     A function which is used to create a new blog.
     '''
     if request.method == "POST":
-        form = articleForm(request.POST,request.FILES)
+        form = articleForm(request.POST , request.FILES)
         if form.is_valid():
             
             article_detail = form.cleaned_data
@@ -31,7 +31,7 @@ def createBlog (request):
             script = article_detail['script']
             
             blog = articleCreateModel.objects.create(title=title,catchline=catchline,thumbnail=thumbnail,script=script)
-            blog.save(force_insert=True)
+            blog.save()
             return render(request, './content/base.html')
         else:
             return render(request, './content/create.html')
@@ -44,16 +44,15 @@ def readBlog(request,title):
     A function which is used to read a blog.
     '''
     try:
-        btitle = title
         tcomments = articleViewModel.objects.values_list("per_comment",flat=True).count()
         tlikes = articleViewModel.objects.filter(per_like = 1).values_list("per_like",flat=True).count()
         read_blog = articleViewModel.objects.create(
-            btitle = btitle,
+            btitle = title,
             total_likes = tlikes,
             total_comments = tcomments,
             username = request.user
         )
-        read_blog.save(force_insert=True)
+        read_blog.save()
         blog_obj = {"blog":articleCreateModel.objects.get(title=title)}
         return render(request, './content/read.html',blog_obj)
     except Exception:

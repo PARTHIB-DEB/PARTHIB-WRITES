@@ -14,7 +14,7 @@ class articleCreateModel(models.Model):
     
     title = models.CharField(unique=True,max_length=60) # Blog Title
     catchline = models.TextField(unique=True,max_length=60) # Blog Catchline
-    thumbnail = models.ImageField(upload_to="static/") # Blog Thumbnail
+    thumbnail = models.ImageField(upload_to="static/thumbs/") # Blog Thumbnail
     script = models.CharField(unique=True) # Blog Content
     
     def __str__(self) -> str:
