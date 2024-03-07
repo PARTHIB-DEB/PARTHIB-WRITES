@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from .models import *
 from django.contrib.auth.decorators import login_required
 from .forms import *
@@ -32,9 +32,9 @@ def createBlog (request):
             
             blog = articleCreateModel.objects.create(title=title,catchline=catchline,thumbnail=thumbnail,script=script)
             blog.save()
-            return render(request, './content/base.html')
+            return redirect('/blogs/')
         else:
-            return render(request, './content/create.html')
+            return redirect('/blogs/')
     return render(request, './content/create.html')
 
 @login_required(login_url="login")
@@ -43,55 +43,48 @@ def readBlog(request,title):
     '''
     A function which is used to read a blog.
     '''
-    try:
-        tcomments = articleViewModel.objects.values_list("per_comment",flat=True).count()
-        tlikes = articleViewModel.objects.filter(per_like = 1).values_list("per_like",flat=True).count()
-        read_blog = articleViewModel.objects.create(
-            btitle = title,
-            total_likes = tlikes,
-            total_comments = tcomments,
-            username = request.user
-        )
-        read_blog.save()
-        blog_obj = {"blog":articleCreateModel.objects.get(title=title)}
-        return render(request, './content/read.html',blog_obj)
-    except Exception:
-        return render(request, './content/base.html')
+    tcomments = articleViewModel.objects.values_list("per_comment",flat=True).count()
+    tlikes = articleViewModel.objects.filter(per_like = 1).values_list("per_like",flat=True).count()
+    read_blog = articleViewModel.objects.create(
+        btitle = articleCreateModel.objects.get(title=title),
+        total_likes = tlikes,
+        total_comments = tcomments,
+        username = newUser.objects.get(username = request.user.username)
+    )
+    read_blog.save()
+    blog_obj = {"blog":articleCreateModel.objects.filter(title=title).all()}
+    return render(request, './content/read.html',context=blog_obj)
 
 
 @login_required(login_url="login")
-def updateBlog(request,pk):
+def updateBlog(request,title):
     
     '''
     A function which is used to update a blog.
     '''
-    blog_obj = articleCreateModel.objects.get(title=pk)
-    upd_obj = {"blog":blog_obj}
-    if request.method == "POST":
-        form = articleForm(request.POST,request.FILES)
-        if form.is_valid():
-            article_detail = form.cleaned_data
-            
-            if (article_detail['title'] != blog_obj.title) and (articleCreateModel.objects.filter(title=article_detail['title']).count() == 0):
-                title = article_detail['title']
-                articleCreateModel.objects.filter(title=blog_obj.title).update(title=title)
-            
-            if (article_detail['catchline'] != blog_obj.catchline) and (articleCreateModel.objects.filter(catchline=article_detail['catchline']).count() == 0):
+    try:
+        blog_obj = articleCreateModel.objects.filter(title=title).all()
+        upd_obj = {"blog":blog_obj}
+        if request.method == "POST":
+            form = articleForm(request.POST , request.FILES)
+            if form.is_valid():
+                article_detail = form.cleaned_data
+                print(article_detail)
+                Btitle = article_detail['title']
                 catchline = article_detail['catchline']
-                articleCreateModel.objects.filter(catchline=blog_obj.catchline).update(catchline=catchline)
-            
-            if (article_detail['thumbnail'] != blog_obj.thumbnail) :
                 thumbnail = article_detail['thumbnail']
-                articleCreateModel.objects.filter(title=article_detail['title']).update(thumbnail=thumbnail)
-                
-            if (article_detail['script'] != blog_obj.script) and (articleCreateModel.objects.filter(script=article_detail['script']).count() == 0):
                 script = article_detail['script']
-                articleCreateModel.objects.filter(script=blog_obj.script).update(script=script)
-
-            return render(request, './content/base.html')
+                
+                articleCreateModel.objects.filter(title=title).update(title=Btitle,catchline=catchline,thumbnail=thumbnail,script=script)
+                articleViewModel.objects.filter(btitle = title).update(btitle = articleCreateModel.objects.get(title=title))
+                return redirect('/blogs/')
+            else:
+                return redirect(f'/blogs/update-blog/{article_detail['title']}')
         else:
-            return render(request, './content/update.html')
-    return render(request, './content/update.html',upd_obj) 
+            return render(request, './content/update.html',upd_obj) 
+    except Exception as error:
+        print(error)
+        return redirect('/blogs/')
 
 @login_required(login_url="login")
 def deleteBlog(request,pk):
