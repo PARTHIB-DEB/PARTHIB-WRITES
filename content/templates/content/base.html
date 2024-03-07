@@ -25,7 +25,7 @@
         <!--Small Navbar-->
         <div class="small-navbar w-auto px-[1.5rem] md:hidden hover:cursor-pointer" id="smallnav">
             <div class="nav-ham flex items-center justify-between text-xl ">
-                <a href="{% url "home" %}">
+                <a href={% url "home" %}>
                     <p class="site-name hover:cursor-pointer " id="site-name" style="filter:drop-shadow(1px 1px 1px white);">
                         <i>Parthib-Writes</i>
                     </p>
@@ -59,7 +59,7 @@
         </div>
         <!--Large Navbar + all menus-->
         <div class="large-navbar hidden md:flex justify-evenly items-centers text-xl">
-            <a href="{% url "home" %}">
+            <a href={% url "home" %}>
                 <p class="site-name hover:cursor-pointer " id="site-name" style="filter:drop-shadow(1px 1px 1px white);">
                     <i>Parthib-Writes</i>
                 </p>
@@ -69,7 +69,7 @@
             <p class="cat hover:cursor-pointer" style="filter:drop-shadow(1px 1px 1px white);">Courses</p>
             <button type="submit"
                 class="h-[2rem] md:h-[2.2rem] w-[6.5rem] md:w-[8.5rem] bg-blue-500 rounded-xl hover:bg-purple-600">
-                <a href="{% url "create" %}">
+                <a href={% url "create" %}>
                     <p class="text-center text-white text-lg">Create Blog</p>
                 </a>
             </button>
@@ -92,13 +92,16 @@
                 My Blogs
             </p>
             <div class="encap-trend flex justify-center items-center mx-[1.5rem] sm:mx-[3rem] md:mx-[8rem]">
-                <div class="Trending py-[2rem] px-[1rem] md:px-[2rem] flex justify-center items-center flex-wrap overflow-x-hidden my-[2rem] h-[25rem] md:h-[50rem] w-full bg-gradient-to-tr from-yellow-300 to-blue-300 rounded-2xl"
-                    id="blogs">
-                    <div class="card flex flex-col items-center h-full md:h-[70%] w-full md:w-[80%] lg:w-1/2 bg-white mb-[1rem] rounded-xl"
+                <div class="Trending py-[2rem] px-[1rem] border-[1px] border-black md:px-[2rem] flex justify-evenly items-center flex-wrap overflow-x-hidden my-[2rem] h-[25rem] md:h-[50rem] w-full bg-gradient-to-tr from-yellow-300 to-blue-300 rounded-2xl"
+                id="blogs">
+                {% for i in blogs %}
+                    <div class="card flex flex-col mx-[1rem] border-[1px] border-black items-center h-full md:h-[70%] w-full md:w-[80%] lg:w-1/2 bg-white mb-[1rem] rounded-xl"
                     id="blog">
-                    {% for i in blogs %}
-                        <img src="/static/thumbs/{{i.thumbnail}}" class="image h-[50%] w-full p-2" />
+                        <img src='/thumbs/{{i.thumbnail}}' class="image h-[50%] w-full p-2" />
                         <hr />
+                        <p class="desc text-center text-lg md:text-2xl text-black mt-[1rem] mx-[1rem]">
+                            {{i.title}}
+                        </p>
                         <p class="desc text-center text-base md:text-xl text-gray-600 mt-[1rem] mx-[1rem]">
                             {{i.catchline}}
                         </p>
@@ -107,8 +110,8 @@
                                 <p class="text-center text-white text-lg">Read Blog</p>
                             </a>
                         </button>
-                        {% endfor %}
                     </div>
+                {% endfor %}
                 </div>
             </div>
         </div>

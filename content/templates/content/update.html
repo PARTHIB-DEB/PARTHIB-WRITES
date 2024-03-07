@@ -7,29 +7,32 @@
 <main>
     <div class="Create-Blog mt-5">
         <div class="blog-form h-full w-full py-5 px-2  text-black">
-            <form action="/home" method="post"
-                class="space-y-4 flex justify-center items-center flex-col rounded-lg py-2 border-[1px]  solid border-black shadow-lg shadow-black">
+            <form enctype="multipart/form-data" method="post" class="space-y-4 flex justify-center items-center flex-col rounded-lg py-2 border-[1px]  solid border-black shadow-lg shadow-black">
+                {% for item in blog %}
+                {% csrf_token %}
                 <div class="b-title w-[90%] h-[10rem] mt-2  bg-slate-200 p-1 font-extrabold text-xl sm:text-2xl md:text-4xl">
-                    <input type="text" id="" placeholder="WRITE BLOG TITTLE..." maxlength="50"
-                        class="w-full h-full text-center text-wrap leading-4 py-4 px-10 bg-slate-200 "
-                        style="text-wrap: wrap;">
+                    <label for="title"></label>
+                    <textarea rows="2" cols="50" maxlength="60" name="title" class="w-full h-full text-center leading-8 bg-slate-200 px-[1rem]" style="text-wrap: wrap; resize: none; padding-top: 1rem;">{{item.title}}</textarea>
                 </div>
-                <div class="b-tag w-[90%] h-[3rem] mt-2 text-lg  p-1 font-bold ">
-                    <input type="text" id="" placeholder="WRITE BLOG TAG..." maxlength="10"
-                        class="w-full h-full text-center text-wrap leading-4 py-4 px-10 bg-slate-200 ">
+                <div class="b-catch w-[90%] h-[3rem] mt-2 text-lg  p-1 font-bold ">
+                    <label for="catchline"></label>
+                    <input type="text" name="catchline" id=""  value="{{item.catchline}}"  maxlength="60" class="w-full h-full text-center text-wrap leading-4 py-4 px-10 bg-slate-200 ">
                 </div>
                 <div class="b-image w-[80%] h-[2rem] space-x-3 flex justify-center items-center">
-                    <label for="blog-image" class="font-extrabold text-xl md:text-4xl">Thumbnail: </label>
-                    <input type="file" name="blog-image" id="" class="md:mt-2">
+                    {% if item.thumbnail %}
+                    <label for="thumbnail" class="font-extrabold text-xl md:text-4xl">Thumbnail: </label>
+                    <input type="file" name="thumbnail" id="" class="md:mt-2">{{item.thumbnail}}
+                    {% endif %}
                 </div>
                 <div class="b-desc w-[90%] h-[40rem] ">
-                    <textarea name="" id="" cols="30" rows="10" placeholder="WRITE BLOG DESCRIPTION..."
-                    class="w-full h-full bg-slate-200 "></textarea>
+                    <label for="script"></label>
+                    <textarea name="script" class="w-full h-full bg-slate-200 pt-2 leading-6" style="padding-left: 0.5rem; padding-right: 0.5rem; resize: none;">{{item.script}}</textarea>
                 </div>
                 <button type="submit"
                     class="h-[2rem] md:h-[2.2rem] w-[6.5rem] md:w-[8.5rem] bg-blue-500 rounded-xl hover:bg-purple-600">
-                    <p class="text-center text-white text-lg">Update Blog</p>
+                    <p class="text-center text-white text-lg">Submit Blog</p>
                 </button>
+                {% endfor %}
             </form>
         </div>
     </div>
