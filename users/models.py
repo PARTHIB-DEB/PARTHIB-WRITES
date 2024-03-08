@@ -51,12 +51,10 @@ class newUserManager(BaseUserManager):
         user = self.model(
             username = username,
             email=self.normalize_email(email),
-            password = password,
-            is_staff = True,
-            is_superuser = True,
-            is_active = True,
+            password = password
         )
-        user.is_admin =True
+        user.is_staff = True,
+        user.is_superuser = True,
         user.save(using=self._db)
         return user
 
@@ -75,7 +73,7 @@ class newUser (AbstractUser):
     
     REQUIRED_FIELDS = ["email"]
     
-    objects = newUserManager()
+    new_objects = newUserManager()
     
     
     def __str__(self) -> str:

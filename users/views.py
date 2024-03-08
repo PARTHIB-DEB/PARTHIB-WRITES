@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render , redirect
 from users.forms import *
 from django.contrib.auth import login ,authenticate , logout
 from django.contrib.auth.decorators import login_required
@@ -10,15 +10,15 @@ import os
 
 load_dotenv()
 
-Sender_Email = os.getenv("EMAIL_HOST_USER")
-Sender_Email_Password = os.getenv("SUPABASE_HOST")
+Sender_Email = os.getenv('EMAIL_HOST_USER')
+Sender_Email_Password = os.getenv('EMAIL_HOST_PASSWORD')
 
 
 # Create your views here.
 
 
 # This set is used for caching by storing usernames locally (maybe will use later)
-# filtered_usernames =  newUser.objects.values_list("username",flat=True)
+# filtered_usernames =  newUser.new_objects.values_list("username",flat=True)
 # registered_users = set(filtered_usernames)
 # print(registered_users)
 
@@ -28,7 +28,7 @@ def register(request):
     '''
     This function is used to register or SignIn a new user into our webapp.
     Here all user inputs are being taken by the ModelForm UserForm and custom Model newUser
-    Also, the defaultmanager 'objects' has been overrriden.
+    Also, the defaultmanager 'new_objects' has been overrriden.
     '''
     if request.method == "POST":
         form = UserForm(request.POST)
@@ -39,21 +39,24 @@ def register(request):
             username = user_datas['username']
             email = user_datas['email']
             
-            if newUser.objects.filter(username = username).count()>0: # Checking if the username exists in Db
+            if newUser.new_objects.filter(username = username).count()>0: # Checking if the username exists in Db
                 raise ValidationError("USERNAME must be UNIQUE")
             
-            if newUser.objects.filter(email = email).count()>0: # Checking if the email exists in Db
+            if newUser.new_objects.filter(email = email).count()>0: # Checking if the email exists in Db
                 raise ValidationError("EMAIL must be UNIQUE")
             
-            if newUser.objects.filter(password = password).count()>0: # Checking if the password exists in Db
+            if newUser.new_objects.filter(password = password).count()>0: # Checking if the password exists in Db
                 raise ValidationError("PASSWORD must be UNIQUE")
             
             if username == Sender_Email:
-                user_obj = newUser.objects.create_superuser(username=username,email=email,password=password)
+                user_obj = newUser.new_objects.create_superuser(username=username,email=email,password=password)
+                # user_obj.is_superuser = True
+                # user_obj.is_user = True
+                # user_obj.save()
             else:
-                user_obj = newUser.objects.create_user(username=username,email=email,password=password)
+                user_obj = newUser.new_objects.create_user(username=username,email=email,password=password)
             
-            newUser.objects.filter(username=user_datas['username']).update(first_name=user_datas['first_name'] , last_name = user_datas['last_name'])
+            newUser.new_objects.filter(username=user_datas['username']).update(first_name=user_datas['first_name'] , last_name = user_datas['last_name'])
             
             subject = "ACCCOUNT VERIFICATION FOR DJANGO APP"
             content = "Hey There , If you find this mail then your account is verified,No click on http://127.0.0.1:8000/profile/"
@@ -61,11 +64,11 @@ def register(request):
             
             # registered_users.add(user_obj.username)
             login(request,user_obj) # for absolutely new users , logging them in automatically
-            return render(request,'./content/base.html')
+            return redirect('/blogs/')
         
-        return render(request,'./users/register.html')
+        return render(request, "./users/register.html")
         
-    return render(request,'./users/register.html')
+    return render(request, "./users/register.html")
 
     
 @login_required(login_url="/")
@@ -87,15 +90,15 @@ def logUserIn(request):
             else:
                 raise ValidationError("USER IS ANONYMOUS")
             
-        return render(request,'./users/login.html')
+        return redirect("/login/")
     
-    return render(request,'./users/login.html')
+    return redirect("/login/")
         
 
 @login_required(login_url="login/")
 def logUserOut(request):
     logout(request)
-    return render(request,'./content/base.html')
+    return redirect("/blogs/")
 
 
 @login_required(login_url="login/")
@@ -110,19 +113,19 @@ def destroy(request):
             user_datas = form.cleaned_data
             response = list(user_datas['question']) # To check if user's response is the expected one or not
             if ((response[0]=="Y" or response[0]=="y") and (response[1]=="e" or response[1]=="E") and (response[2]=="S" or response[2]=="s") and len(response)==3):
-                del_obj = newUser.objects.filter(usename=user_datas['username'] , password=user_datas['password'])
+                del_obj = newUser.new_objects.filter(usename=user_datas['username'] , password=user_datas['password'])
                 # registered_users.remove(user_datas['username'])
                 del_obj.delete()
-                return render(request,'./users/register.html')
+                return redirect("/")
             
-            return render(request,'./content/base.html')
+            return redirect("/blogs/")
         
-        return render(request,'./content/base.html')
+        return redirect("/blogs/")
     
-    return render(request,'./content/base.html')
+    return redirect("/blogs/")
 
 
 @login_required(login_url="login/")
 def profile(request):
-    context = {"items":newUser.objects.all()}
+    context = {"items":newUser.new_objects.all()}
     return render(request, './content/profile.html',context)
