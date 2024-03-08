@@ -66,20 +66,20 @@ def updateBlog(request,title):
         blog_obj = articleCreateModel.objects.filter(title=title).all()
         upd_obj = {"blog":blog_obj}
         if request.method == "POST":
-            form = articleForm(request.POST , request.FILES)
+            upd_obj = articleCreateModel.objects.get(title=title)
+            form = articleForm(request.POST, request.FILES , instance=upd_obj)
             if form.is_valid():
-                article_detail = form.cleaned_data
-                print(article_detail)
-                Btitle = article_detail['title']
-                catchline = article_detail['catchline']
-                thumbnail = article_detail['thumbnail']
-                script = article_detail['script']
-                
-                articleCreateModel.objects.filter(title=title).update(title=Btitle,catchline=catchline,thumbnail=thumbnail,script=script)
-                articleViewModel.objects.filter(btitle = title).update(btitle = articleCreateModel.objects.get(title=title))
-                return redirect('/blogs/')
+                new_data = form.cleaned_data
+                print(new_data)
+                articleCreateModel.objects.filter(title=title).update(
+                    title = new_data['title'],
+                    thumbnail = new_data['thumbnail'],
+                    catchline = new_data['catchline'],
+                    script = new_data['script']
+                )
+                return redirect ("/blogs/")
             else:
-                return redirect(f'/blogs/update-blog/{article_detail['title']}')
+                return redirect(f'/blogs/update-blog/{title}')
         else:
             return render(request, './content/update.html',upd_obj) 
     except Exception as error:
