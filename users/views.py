@@ -90,9 +90,9 @@ def logUserIn(request):
             else:
                 raise ValidationError("USER IS ANONYMOUS")
             
-        return redirect("/login/")
+        return render(request,"./users/login.html")
     
-    return redirect("/login/")
+    return render(request,"./users/login.html")
         
 
 @login_required(login_url="login/")
