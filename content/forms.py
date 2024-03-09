@@ -9,7 +9,7 @@ class articleForm(ModelForm):
         fields = "__all__"
 
 class DeleteArticleForm(forms.Form):
-    question = forms.CharField(label="question",max_length=3)
+    title = forms.CharField(label="title")
     
 class LikeCommentForm(ModelForm):
     class Meta:

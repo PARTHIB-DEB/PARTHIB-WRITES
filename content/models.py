@@ -40,13 +40,13 @@ class articleViewModel(models.Model):
         ('-----',0)
     )
     
-    btitle = models.ForeignKey(articleCreateModel, on_delete=models.CASCADE) # The blog , identified by BLOG-TITLE
+    btitle_id = models.ForeignKey(articleCreateModel,null=True, blank = True, on_delete=models.CASCADE , db_column="btitle_id") # The blog , identified by BLOG-TITLE
+    btitle = models.CharField(unique=True)
     total_likes=models.IntegerField(default=0)  # Total Liked the blog got (numbers)
     total_comments = models.IntegerField(default=0)  # Total Comments the blog got (numbers)
     per_comment = models.CharField(null=True,blank=True) # Individual Comment of viewers
     per_like = models.IntegerField(null=True,blank=True,choices=CHOICES,default=0) # Individual Like of viewers
-    username = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE) # Viewer's identity , got by USERNAME
+    username = models.CharField(null=True, blank = True)
+    user_id = models.ForeignKey(AUTH_USER_MODEL, null=True, blank = True, on_delete=models.CASCADE , db_column="user_id") # Viewer's identity , got by USERNAME
     
-    
-    def __str__(self) -> str:
-        return self.title
+

@@ -10,12 +10,12 @@ from users.models import *
 # print(articleCreateModel.objects.all())
 
 
-@login_required(login_url="login")
+@login_required(login_url="login/")
 def home(request):
     context = {"blogs":articleCreateModel.objects.all()}
     return render(request, './content/base.html',context)
 
-@login_required(login_url="login")
+@login_required(login_url="login/")
 def createBlog (request):
     '''
     A function which is used to create a new blog.
@@ -37,7 +37,7 @@ def createBlog (request):
             return redirect('/blogs/')
     return render(request, './content/create.html')
 
-@login_required(login_url="login")
+@login_required(login_url="login/")
 def readBlog(request,title):
     
     '''
@@ -45,18 +45,30 @@ def readBlog(request,title):
     '''
     tcomments = articleViewModel.objects.values_list("per_comment",flat=True).count()
     tlikes = articleViewModel.objects.filter(per_like = 1).values_list("per_like",flat=True).count()
-    read_blog = articleViewModel.objects.create(
-        btitle = articleCreateModel.objects.get(title=title),
-        total_likes = tlikes,
-        total_comments = tcomments,
-        username = newUser.objects.get(username = request.user.username)
-    )
-    read_blog.save()
+    if articleViewModel.objects.filter(btitle = title).count()==1:
+        articleViewModel.objects.filter(btitle = title).update(
+            btitle_id = articleCreateModel.objects.get(title=title),
+            btitle = articleCreateModel.objects.get(title=title).title,
+            total_likes = tlikes,
+            total_comments = tcomments,
+            user_id = newUser.objects.get(username = request.user.username),
+            username = newUser.objects.get(username = request.user.username).username
+        )
+    else:
+        X = articleViewModel.objects.create(
+            btitle_id = articleCreateModel.objects.get(title=title),
+            btitle = articleCreateModel.objects.get(title=title).title,
+            total_likes = tlikes,
+            total_comments = tcomments,
+            user_id = newUser.objects.get(username = request.user.username),
+            username = newUser.objects.get(username = request.user.username).username
+        )
+        X.save()
     blog_obj = {"blog":articleCreateModel.objects.filter(title=title).all()}
     return render(request, './content/read.html',context=blog_obj)
 
 
-@login_required(login_url="login")
+@login_required(login_url="login/")
 def updateBlog(request,title):
     
     '''
@@ -66,11 +78,11 @@ def updateBlog(request,title):
         blog_obj = articleCreateModel.objects.filter(title=title).all()
         upd_obj = {"blog":blog_obj}
         if request.method == "POST":
-            upd_obj = articleCreateModel.objects.get(title=title)
-            form = articleForm(request.POST, request.FILES , instance=upd_obj)
+            upd_obj_instance = articleCreateModel.objects.get(title=title)
+            form = articleForm(request.POST, request.FILES , instance=upd_obj_instance)
             if form.is_valid():
                 new_data = form.cleaned_data
-                print(new_data)
+                # print(new_data)
                 articleCreateModel.objects.filter(title=title).update(
                     title = new_data['title'],
                     thumbnail = new_data['thumbnail'],
@@ -79,33 +91,34 @@ def updateBlog(request,title):
                 )
                 return redirect ("/blogs/")
             else:
-                return redirect(f'/blogs/update-blog/{title}')
+                return render(request, './content/update.html',upd_obj)
         else:
             return render(request, './content/update.html',upd_obj) 
     except Exception as error:
         print(error)
         return redirect('/blogs/')
 
-@login_required(login_url="login")
-def deleteBlog(request,pk):
+@login_required(login_url="login/")
+def deleteBlog(request,title):
     
     '''
         A function to delete the blog
     '''
-    if request.method == "POST":
-        form = DeleteArticleForm(request.POST)
-        if form.is_valid():
-            user_datas = form.cleaned_data
-            response = list(user_datas['question']) # To check if user's response is the expected one or not
-            if ((response[0]=="Y" or response[0]=="y") and (response[1]=="e" or response[1]=="E") and (response[2]=="S" or response[2]=="s") and len(response)==3):
-                del_obj = articleCreateModel.objects.filter(title = pk)
-                del_obj.delete()
-                return render(request,'./content/base.html')
-        return render(request,'./content/base.html')
-    return render(request,'./content/base.html')
+    if articleCreateModel.objects.get(title = title):
+        del_blog_context = {"blog":title}
+        if request.method == "POST":
+            form = DeleteArticleForm(request.POST)
+            if form.is_valid():
+                articleCreateModel.objects.filter(title = form.cleaned_data['title']).delete()
+                # articleViewModel.objects.filter(title=articleCreateModel.objects.get(title=title)).delete()
+                return redirect ("/blogs/")
+        else:
+            return render(request, "./content/delete.html",context=del_blog_context)
+    else:
+        return redirect("/blogs/")
+            
 
-
-@login_required(login_url="login")
+@login_required(login_url="login/")
 def per_like_comment_fn(request,pk):
     form = LikeCommentForm()
     if request.method == "POST":
@@ -122,3 +135,4 @@ def per_like_comment_fn(request,pk):
             return render(request,'./content/base.html')
         return render(request,'./content/base.html')
     return render(request,'./content/comment.html',{"form":form})
+

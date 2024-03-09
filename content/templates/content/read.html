@@ -26,11 +26,20 @@
             <p class="b-desc-show text-xl md:text-2xl mtext-center mt-5">
                 {{item.script}}
             </p>
-            <button type="submit" class="h-[2rem] w-[8rem] md:w-[8.5rem] mt-[2rem] bg-blue-500 rounded-xl hover:bg-purple-600">
-                <a href={% url "update" item.title  %}>
-                    <p class="text-center text-white text-lg">Update Blog</p>
-                </a>
-            </button>
+            {% if request.user.is_superuser %}
+            <div class="btns flex justify-evenly space-x-7 items-center">
+                <button type="submit" class="h-[2rem] w-[8rem] md:w-[8.5rem] mt-[2rem] bg-blue-500 rounded-xl hover:bg-purple-600">
+                    <a href={% url "update" item.title  %}>
+                        <p class="text-center text-white text-lg">Update Blog</p>
+                    </a>
+                </button>
+                <button type="submit" class="h-[2rem] w-[8rem] md:w-[8.5rem] mt-[2rem] bg-red-500 rounded-xl hover:bg-red-800">
+                    <a href={% url "delete" item.title  %}>
+                        <p class="text-center text-white text-lg">Delete Blog</p>
+                    </a>
+                </button>
+            </div>
+            {% endif %}
         </div>
         {% endfor %}
     </div>
