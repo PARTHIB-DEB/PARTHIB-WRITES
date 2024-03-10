@@ -43,29 +43,34 @@ def readBlog(request,title):
     '''
     A function which is used to read a blog.
     '''
-    tcomments = articleViewModel.objects.values_list("per_comment",flat=True).count()
-    tlikes = articleViewModel.objects.filter(per_like = 1).values_list("per_like",flat=True).count()
-    if articleViewModel.objects.filter(btitle = title).count()==1:
-        articleViewModel.objects.filter(btitle = title).update(
-            btitle_id = articleCreateModel.objects.get(title=title),
-            btitle = articleCreateModel.objects.get(title=title).title,
-            total_likes = tlikes,
-            total_comments = tcomments,
-            user_id = newUser.objects.get(username = request.user.username),
-            username = newUser.objects.get(username = request.user.username).username
-        )
+    if request.method == "POST":
+        form = likeForm(request.POST)
+        if form.is_valid():
+            articleCreateModel.objects.filter(btitle=title).update(per_like = 1)
     else:
-        X = articleViewModel.objects.create(
-            btitle_id = articleCreateModel.objects.get(title=title),
-            btitle = articleCreateModel.objects.get(title=title).title,
-            total_likes = tlikes,
-            total_comments = tcomments,
-            user_id = newUser.objects.get(username = request.user.username),
-            username = newUser.objects.get(username = request.user.username).username
-        )
-        X.save()
-    blog_obj = {"blog":articleCreateModel.objects.filter(title=title).all()}
-    return render(request, './content/read.html',context=blog_obj)
+        tcomments = articleViewModel.objects.values_list("per_comment",flat=True).count()
+        tlikes = articleViewModel.objects.filter(per_like = 1).values_list("per_like",flat=True).count()
+        if articleViewModel.objects.filter(btitle = title).count()==1:
+            articleViewModel.objects.filter(btitle = title).update(
+                btitle_id = articleCreateModel.objects.get(title=title),
+                btitle = articleCreateModel.objects.get(title=title).title,
+                total_likes = tlikes,
+                total_comments = tcomments,
+                user_id = newUser.objects.get(username = request.user.username),
+                username = newUser.objects.get(username = request.user.username).username
+            )
+        else:
+            X = articleViewModel.objects.create(
+                btitle_id = articleCreateModel.objects.get(title=title),
+                btitle = articleCreateModel.objects.get(title=title).title,
+                total_likes = tlikes,
+                total_comments = tcomments,
+                user_id = newUser.objects.get(username = request.user.username),
+                username = newUser.objects.get(username = request.user.username).username
+            )
+            X.save()
+        blog_obj = {"blog":articleCreateModel.objects.filter(title=title).all()}
+        return render(request, './content/read.html',context=blog_obj)
 
 
 @login_required(login_url="login/")
@@ -104,14 +109,13 @@ def deleteBlog(request,title):
     '''
         A function to delete the blog
     '''
-    if articleCreateModel.objects.get(title = title):
+    if articleCreateModel.objects.filter(title = title).count() == 1:
         del_blog_context = {"blog":title}
         if request.method == "POST":
-            form = DeleteArticleForm(request.POST)
-            if form.is_valid():
-                articleCreateModel.objects.filter(title = form.cleaned_data['title']).delete()
-                # articleViewModel.objects.filter(title=articleCreateModel.objects.get(title=title)).delete()
-                return redirect ("/blogs/")
+            del_blog_title = request.POST['title']
+            articleCreateModel.objects.filter(title = del_blog_title).all().delete()
+            articleViewModel.objects.filter(btitle_id = articleCreateModel.objects.get(title = title)).all().delete()
+            return redirect("/blogs/")
         else:
             return render(request, "./content/delete.html",context=del_blog_context)
     else:
@@ -119,20 +123,16 @@ def deleteBlog(request,title):
             
 
 @login_required(login_url="login/")
-def per_like_comment_fn(request,pk):
-    form = LikeCommentForm()
+def CommentBlog(request,title):
+    context = {"blog":title}
     if request.method == "POST":
-        form = LikeCommentForm(request.POST)
+        form = CommentForm(request.POST)
         if form.is_valid():
-            raw_response = form.cleaned_data
-            curate_comment = ""
-            raw_like ,  raw_comment = raw_response[0] , raw_response[1]
-            list_comment = list(raw_comment)
-            for i in range(len(list_comment)):
-                if list_comment[i] != " ":
-                    curate_comment += list_comment[i]
-            articleCreateModel.objects.filter(title = pk).update(per_like = raw_like, per_comment = curate_comment)
-            return render(request,'./content/base.html')
-        return render(request,'./content/base.html')
-    return render(request,'./content/comment.html',{"form":form})
+            comment = form.cleaned_data['per_comment']
+            articleViewModel.objects.filter(btitle = title).update(per_comment = comment)
+            return redirect("/blogs/")
+        else:
+            return render(request,"./content/comment.html",context)
+    else:
+        return render(request,"./content/comment.html",context)
 
