@@ -10,11 +10,13 @@
         {% for item in blog %}
         <img src="/thumbs/{{item.thumbnail}}" alt="" srcset=""class="-mt-[4rem] md:-mt-[8rem] w-[75%] h-[75%] md:w-[50%] md:h-[50%] border-2 solid border-green-400" />
         <div class="like-comment flex justify-center space-x-4 items-center  h-[2.2rem] w-[14rem]  mt-[1rem]">
-            <p class="text-base md:text-xl hover:font-bold">Like</p>
+            <form action="post">
+                <label class="text-base md:text-xl hover:font-bold" for="per_like">Like</label>
+                <input type="number" name="perlike" class="hidden" maxlength="1">
+            </form>
             <p class="text-base md:text-xl hover:font-bold">|</p>
-            <p class="text-base md:text-xl hover:font-bold">Comment</p>
-            <!-- <a href="comment.html">
-            </a> -->
+            <p class="text-base md:text-xl hover:font-bold"><a href={% url "comment" item.title %}>Comment</a></p>
+            
         </div>
         <div class="description flex flex-col mt-5 items-center justify-center w-full h-auto bg-white rounded-lg">
             <p class="b-catch-show text-lg sm:text-xl md:text-2xl lg:text-4xl text-center mt-5">
