@@ -47,13 +47,15 @@
                     id="navItems">
                     <p class="blogss hover:cursor-pointer">Blogs</p>
                     <p class="platforms hover:cursor-pointer">Other Platforms</p>
-                    <p class="cat hover:cursor-pointer">Courses</p>
-                    <button type="submit"
-                        class="h-[2rem] w-[8rem] md:w-[8.5rem] bg-blue-500 rounded-xl hover:bg-purple-600">
-                        <a href="{% url "create" %}">
-                            <p class="text-center text-white text-lg">Create Blog</p>
-                        </a>
+                    <p class="Courses cat hover:cursor-pointer">Courses</p>
+                    <p class="Profile cat hover:cursor-pointer" style="filter:drop-shadow(1px 1px 1px white);"><a href={% url 'profile' %}>Profile</a></p>
+                    {% if request.user.is_superuser %}
+                    <button type="submit" class="h-[2rem] w-[8rem] md:w-[8.5rem] bg-blue-500 rounded-xl hover:bg-purple-600">
+                    <a href={% url "create" %}>
+                        <p class="text-center text-white text-lg">Create Blog</p>
+                    </a>
                     </button>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -67,12 +69,14 @@
             <p class="blogss hover:cursor-pointer" style="filter:drop-shadow(1px 1px 1px white);">Blogs</p>
             <p class="platforms hover:cursor-pointer" style="filter:drop-shadow(1px 1px 1px white);">Other Platforms</p>
             <p class="cat hover:cursor-pointer" style="filter:drop-shadow(1px 1px 1px white);">Courses</p>
-            <button type="submit"
-                class="h-[2rem] md:h-[2.2rem] w-[6.5rem] md:w-[8.5rem] bg-blue-500 rounded-xl hover:bg-purple-600">
+            <p class="cat hover:cursor-pointer" style="filter:drop-shadow(1px 1px 1px white);"><a href={% url 'profile' %}>Profile</a></p>
+            {% if request.user.is_superuser %}
+                <button type="submit" class="h-[2rem] md:h-[2.2rem] w-[6.5rem] md:w-[8.5rem] bg-blue-500 rounded-xl hover:bg-purple-600">
                 <a href={% url "create" %}>
                     <p class="text-center text-white text-lg">Create Blog</p>
                 </a>
-            </button>
+                </button> 
+            {% endif %}
         </div>
         <!--Quote-->
         <div class="py-8 px-4 mx-auto max-w-screen-xl text-center mt-[3rem] md:mt-[8rem] lg:py-16 lg:px-12">
