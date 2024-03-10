@@ -8,10 +8,13 @@ class articleForm(ModelForm):
         model = articleCreateModel
         fields = "__all__"
 
-class DeleteArticleForm(forms.Form):
-    title = forms.CharField(label="title")
     
-class LikeCommentForm(ModelForm):
+class likeForm(ModelForm):
     class Meta:
         model = articleViewModel
-        fields = ("per_like","per_comment")
+        fields = ("per_like",)
+        
+class CommentForm(ModelForm):
+    class Meta:
+        model = articleViewModel
+        fields = ("per_comment",)
