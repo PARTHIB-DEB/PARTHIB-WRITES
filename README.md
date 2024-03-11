@@ -5,16 +5,29 @@
 
 - 🌟 Let's have a look on the feature differences.
   
-| Features     | V1     | V2 |
-|--------------|-----------|------------|
-| Django-Tailwind Packadge | Yes     | No (Will manually do)   |
-| Emailing    | No  | Yes (Trying to add by third party service)   |
-| Authentication   | No  | Yes (Trying to do add Native, May add Third Party auth also)  |
-| Payment Gateway | No  | Yes (Trying to do add Third Party services)  |
+## Features ⚡⚡
+- ### User Authentication ✔️
+  The primary Goal of this project is to make it safe and less vulnerable from the attacks of anonymous / Unauthenticated Users. So I created this module - by taking help 
+  of **Django Authentication System** . Roughly The AUTH game in Django can be depicted like that - There are certain ```Groups``` of users , who have some categories of       ```permissions``` , bascially they are two different ```models``` or SQL Relations who maintain ```M-2-M``` relationship among them. Now ```Users``` are one of the Groups    who have some permissions over the app - by default set by django. Now this ```Users``` is also a Model , which Got inherited from ```AbstractUser``` Model, which furthur    inherited from ```AbstractBaseUser``` Model. Here I have Just Used the ```AbstractUser``` Model , and created my own user model by changing some of the method Definitions
+  little bit. **Check out inside ```users``` 📁**
 
-- 🍒 Development Addon - Will Provide REST APIs to connect it with any other microservices ,  Trying to implement Testing 🧪 🧪.
+- ### Django Forms EveryWhere ✔️
+  Although Previously I did the ```Create-Read-Update-Delete``` operations on blogs , but there I did not take the help of ```Django Forms```. I  fetched the raw data 
+  from ```request.POST``` dictionary , which might have caused vulnerability. So here for all set of operations , I used this feature provided by django.
 
-- 🛢️In V1, I used SQLITE as its database . But , Now I planned to use Postgresql.
+- ### Postgresql Database ✔️
+  Databases are crucial choices and Django gives native support for couple of good SQL databases - Postgres is one of them. Its a good Object-Oriented Database , have safety
+  safety checking technoques like ```Row Security Policies```.  So I switched to this database
+
+- ### Own Django + Tailwind Setup ✔️
+  In V1 , I used a readymade packadge , which was not so developer-friendly . So I saw How they made the combination of two different servers and do that manually. Basically
+  I applied ```TailwindCss-CLI``` with ```Django``` **(There is one tutorial in my github on this topic , can check out)**. **❗❗ This Way is not recommended for bigger projects**
+
+- ### Emailing the User :
+  Here also Django provide their default setup , which I used in V1 but Target Gmail was just refusing my mails :disappointed:. Let's see now
+
+- ### Writing TestCases by Pytest : 
+  Needs no introduction , because testcases are an integral part of any serious application. Trying to implement them.
 
 ## How to download this project :
 
@@ -24,5 +37,13 @@
 
 ```bash
   python -m pip install -r requirements.txt
+
+  or
+
+  python3 -m pip install -r requirements.txt
+
+  or
+
+  pip install -r requirements.txt
 ```
 **Although Upgrade Your Django Version , whenever you download it.**
