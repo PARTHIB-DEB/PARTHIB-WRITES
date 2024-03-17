@@ -10,12 +10,12 @@ from users.models import *
 # print(articleCreateModel.objects.all())
 
 
-@login_required(login_url="login/")
+@login_required(login_url="/login/")
 def home(request):
     context = {"blogs":articleCreateModel.objects.all()}
     return render(request, './content/base.html',context)
 
-@login_required(login_url="login/")
+@login_required(login_url="/login/")
 def createBlog (request):
     '''
     A function which is used to create a new blog.
@@ -37,7 +37,7 @@ def createBlog (request):
             return redirect('/blogs/')
     return render(request, './content/create.html')
 
-@login_required(login_url="login/")
+@login_required(login_url="/login/")
 def readBlog(request,title):
     
     '''
@@ -48,19 +48,19 @@ def readBlog(request,title):
         if form.is_valid():
             articleCreateModel.objects.filter(btitle=title).update(per_like = 1)
     else:
-        tcomments = articleViewModel.objects.values_list("per_comment",flat=True).count()
+        tcomments = articleViewModel.objects.filter(username=request.user.username).values_list("per_comment",flat=True).count()
         tlikes = articleViewModel.objects.filter(per_like = 1).values_list("per_like",flat=True).count()
-        if articleViewModel.objects.filter(btitle = title).count()==1:
-            articleViewModel.objects.filter(btitle = title).update(
+        if articleViewModel.objects.filter(btitle = title , username = request.user.username).count()==1:
+            articleViewModel.objects.filter(btitle = title , username = request.user.username).update(
                 btitle_id = articleCreateModel.objects.get(title=title),
                 btitle = articleCreateModel.objects.get(title=title).title,
                 total_likes = tlikes,
                 total_comments = tcomments,
-                user_id = newUser.objects.get(username = request.user.username),
-                username = newUser.objects.get(username = request.user.username).username
+                # user_id = newUser.objects.get(username = request.user.username),
+                # username = newUser.objects.get(username = request.user.username).username
             )
         else:
-            X = articleViewModel.objects.create(
+            articleViewModel.objects.create(
                 btitle_id = articleCreateModel.objects.get(title=title),
                 btitle = articleCreateModel.objects.get(title=title).title,
                 total_likes = tlikes,
@@ -68,12 +68,11 @@ def readBlog(request,title):
                 user_id = newUser.objects.get(username = request.user.username),
                 username = newUser.objects.get(username = request.user.username).username
             )
-            X.save()
         blog_obj = {"blog":articleCreateModel.objects.filter(title=title).all()}
         return render(request, './content/read.html',context=blog_obj)
 
 
-@login_required(login_url="login/")
+@login_required(login_url="/login/")
 def updateBlog(request,title):
     
     '''
@@ -90,10 +89,12 @@ def updateBlog(request,title):
                 # print(new_data)
                 articleCreateModel.objects.filter(title=title).update(
                     title = new_data['title'],
-                    thumbnail = new_data['thumbnail'],
                     catchline = new_data['catchline'],
                     script = new_data['script']
                 )
+                obj = articleCreateModel.objects.get(title=title)
+                obj.thumbnail = new_data['thumbnail']
+                obj.save()
                 return redirect ("/blogs/")
             else:
                 return render(request, './content/update.html',upd_obj)
@@ -103,7 +104,7 @@ def updateBlog(request,title):
         print(error)
         return redirect('/blogs/')
 
-@login_required(login_url="login/")
+@login_required(login_url="/login/")
 def deleteBlog(request,title):
     
     '''
@@ -114,7 +115,7 @@ def deleteBlog(request,title):
         if request.method == "POST":
             del_blog_title = request.POST['title']
             articleCreateModel.objects.filter(title = del_blog_title).all().delete()
-            articleViewModel.objects.filter(btitle_id = articleCreateModel.objects.get(title = title)).all().delete()
+            articleViewModel.objects.filter(btitle = del_blog_title).all().delete()
             return redirect("/blogs/")
         else:
             return render(request, "./content/delete.html",context=del_blog_context)
@@ -122,14 +123,20 @@ def deleteBlog(request,title):
         return redirect("/blogs/")
             
 
-@login_required(login_url="login/")
+@login_required(login_url="/login/")
 def CommentBlog(request,title):
     context = {"blog":title}
     if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.cleaned_data['per_comment']
-            articleViewModel.objects.filter(btitle = title).update(per_comment = comment)
+            obj = articleViewModel.objects.get(btitle = title , username = request.user.username)
+            if obj.per_comment is None:
+                obj.per_comment = comment
+            else:
+                obj.per_comment = str(obj.per_comment)+"\n"+str(comment)
+            obj.total_comments = obj.total_comments + 1
+            obj.save()
             return redirect("/blogs/")
         else:
             return render(request,"./content/comment.html",context)
