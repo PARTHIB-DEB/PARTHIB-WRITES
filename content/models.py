@@ -41,7 +41,7 @@ class articleViewModel(models.Model):
     )
     
     btitle_id = models.ForeignKey(articleCreateModel,null=True, blank = True, on_delete=models.CASCADE , db_column="btitle_id") # The blog , identified by BLOG-TITLE
-    btitle = models.CharField(unique=True)
+    btitle = models.CharField()
     total_likes=models.IntegerField(default=0)  # Total Liked the blog got (numbers)
     total_comments = models.IntegerField(default=0)  # Total Comments the blog got (numbers)
     per_comment = models.CharField(null=True,blank=True) # Individual Comment of viewers
@@ -49,4 +49,6 @@ class articleViewModel(models.Model):
     username = models.CharField(null=True, blank = True)
     user_id = models.ForeignKey(AUTH_USER_MODEL, null=True, blank = True, on_delete=models.CASCADE , db_column="user_id") # Viewer's identity , got by USERNAME
     
+    def __str__(self) -> str:
+        return self.username
 
