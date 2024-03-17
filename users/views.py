@@ -1,4 +1,4 @@
-from django.shortcuts import render , redirect
+from django.shortcuts import render , redirect , HttpResponseRedirect
 from users.forms import *
 from django.contrib.auth import login ,authenticate , logout
 from django.contrib.auth.decorators import login_required
@@ -18,10 +18,10 @@ Sender_Email_Password = os.getenv('EMAIL_HOST_PASSWORD')
 
 
 # This set is used for caching by storing usernames locally (maybe will use later)
-# filtered_usernames =  newUser.new_objects.values_list("username",flat=True)
-# registered_users = set(filtered_usernames)
-# print(registered_users)
-
+registered_users = list(newUser.new_objects.filter().values_list("username",flat=True))
+# print(logged_users)
+        
+    
 
 def register(request):
     
@@ -55,50 +55,44 @@ def register(request):
                 # user_obj.save()
             else:
                 user_obj = newUser.new_objects.create_user(username=username,email=email,password=password)
-            
             newUser.new_objects.filter(username=user_datas['username']).update(first_name=user_datas['first_name'] , last_name = user_datas['last_name'])
-            
-            subject = "ACCCOUNT VERIFICATION FOR DJANGO APP"
-            content = "Hey There , If you find this mail then your account is verified,No click on http://127.0.0.1:8000/profile/"
-            send_mail(subject, content, Sender_Email, recipient_list=[user_obj.email,], fail_silently=True)
-            
-            # registered_users.add(user_obj.username)
-            login(request,user_obj) # for absolutely new users , logging them in automatically
+            login(request,user_obj)
             return redirect('/blogs/')
-        
+        else:
+            print("\n\t\t OH NO!! FORM IS NOT VALID -> Register")
+            return render(request, "./users/register.html")
+    else:
+        print("\n\t\t OH NO!! REQUEST IS NOT POST -> Register")
         return render(request, "./users/register.html")
-        
-    return render(request, "./users/register.html")
 
     
-@login_required(login_url="/")
+
 def logUserIn(request):
     
     '''
     This function is used to log User in the app , if he/she is logged out but not signed out.
     '''
-    if request.method == "POST":
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            user_datas = form.cleaned_data
-            username = user_datas['username']
-            password = user_datas['password']
-            
-            user_obj = authenticate(username=username,password=password) 
-            if user_obj is not None:
-                login(request,user_obj)
-            else:
-                raise ValidationError("USER IS ANONYMOUS")
-            
-        return render(request,"./users/login.html")
+    form = LoginForm(request.POST or None)
+    print(form.clean())
+    if form.is_valid():
+        data = form.changed_data
+        print(data)
+        username , password  = data['username'] , data['password1']
+        user_obj = authenticate(username=username,password=password)
+        if user_obj is not None:
+            login(request,user_obj)
+            return redirect('/blogs/')
+        else:
+            return redirect('/login/')
+    else:
+        return render(request, "./users/login.html")
     
-    return render(request,"./users/login.html")
         
 
 @login_required(login_url="login/")
 def logUserOut(request):
     logout(request)
-    return redirect("/blogs/")
+    return redirect("/login/")
 
 
 @login_required(login_url="login/")
@@ -113,7 +107,7 @@ def destroy(request):
             user_datas = form.cleaned_data
             response = list(user_datas['question']) # To check if user's response is the expected one or not
             if ((response[0]=="Y" or response[0]=="y") and (response[1]=="e" or response[1]=="E") and (response[2]=="S" or response[2]=="s") and len(response)==3):
-                del_obj = newUser.new_objects.filter(usename=user_datas['username'] , password=user_datas['password'])
+                del_obj = newUser.new_objects.filter(usename=user_datas['username'] , password=user_datas['password']).all()
                 # registered_users.remove(user_datas['username'])
                 del_obj.delete()
                 return redirect("/")
@@ -122,10 +116,10 @@ def destroy(request):
         
         return redirect("/blogs/")
     
-    return redirect("/blogs/")
+    return render(request,"./users/deluser.html")
 
 
-@login_required(login_url="login/")
+@login_required(login_url="/login/")
 def profile(request):
-    context = {"items":newUser.new_objects.all()}
-    return render(request, './content/profile.html',context)
+    context = {"blogs":newUser.new_objects.filter(username = request.user.username).all()}
+    return render(request, './users/profile.html',context)
