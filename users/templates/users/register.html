@@ -15,7 +15,6 @@
 
 <body class="overflow-x-hidden bg-no-repeat bg-center bg-cover bg-gradient-to-br bg-white"
     style="font-family: Mukta; font-weight: 400;">
-    <!--Header-->
     {% block users %}
     <main>
         <!--User Auth Form-->
@@ -47,12 +46,11 @@
                     <label for="password2">Confirm Pass:</label>
                     <input type="password" name="password2" id="password2" class="rounded-md text-black pl-2" placeholder="Confirm Password">
                 </div>
-                <input type="submit" value="Register" class="w-[5.5rem] h-[2rem] md:w-[6.5rem] md:h-[3rem] md:text-lg lg:text-xl bg-blue-600 rounded-lg hover:bg-green-400">
+                <button type="submit" class="w-[5.5rem] h-[2rem] md:w-[6.5rem] md:h-[3rem] md:text-lg lg:text-xl bg-blue-600 rounded-lg hover:bg-green-400">Submit</button>
             </form>
         </div>
     </main>
     {% endblock users %}
 </body>
-<script src="/static/main.js"></script>
 
 </html>
