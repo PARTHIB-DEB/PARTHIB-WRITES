@@ -22,8 +22,3 @@ class LoginForm(ModelForm):
         fields = ("username","password")
         
         
-class DeleteForm(ModelForm):
-    question = forms.CharField()
-    class Meta:
-        model = newUser
-        fields = ("username","password","question")

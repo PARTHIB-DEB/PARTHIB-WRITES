@@ -20,7 +20,6 @@ Sender_Email_Password = os.getenv('EMAIL_HOST_PASSWORD')
 # This set is used for caching by storing usernames locally (maybe will use later)
 registered_users = list(newUser.new_objects.filter().values_list("username",flat=True))
 # print(logged_users)
-        
     
 
 def register(request):
@@ -65,20 +64,18 @@ def register(request):
         print("\n\t\t OH NO!! REQUEST IS NOT POST -> Register")
         return render(request, "./users/register.html")
 
-    
 
 def logUserIn(request):
     
     '''
     This function is used to log User in the app , if he/she is logged out but not signed out.
     '''
-    form = LoginForm(request.POST or None)
-    print(form.clean())
-    if form.is_valid():
-        data = form.changed_data
-        print(data)
-        username , password  = data['username'] , data['password1']
-        user_obj = authenticate(username=username,password=password)
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        user_datas = form.data
+        username = user_datas['username']
+        password = user_datas['password']
+        user_obj = authenticate(request,username=username,password=password)
         if user_obj is not None:
             login(request,user_obj)
             return redirect('/blogs/')
@@ -91,8 +88,10 @@ def logUserIn(request):
 
 @login_required(login_url="login/")
 def logUserOut(request):
+    uname = request.user.username
     logout(request)
-    return redirect("/login/")
+    if newUser.new_objects.filter(username = uname).count()==1:
+        return redirect ('/login/')
 
 
 @login_required(login_url="login/")
@@ -101,22 +100,8 @@ def destroy(request):
     This function is used to Delete user's account.
     That means he/she wants to sign out.
     '''
-    if request.method == "POST":
-        form = DeleteForm(request.POST)
-        if form.is_valid():
-            user_datas = form.cleaned_data
-            response = list(user_datas['question']) # To check if user's response is the expected one or not
-            if ((response[0]=="Y" or response[0]=="y") and (response[1]=="e" or response[1]=="E") and (response[2]=="S" or response[2]=="s") and len(response)==3):
-                del_obj = newUser.new_objects.filter(usename=user_datas['username'] , password=user_datas['password']).all()
-                # registered_users.remove(user_datas['username'])
-                del_obj.delete()
-                return redirect("/")
-            
-            return redirect("/blogs/")
-        
-        return redirect("/blogs/")
-    
-    return render(request,"./users/deluser.html")
+    newUser.new_objects.filter(username = request.user.username).all().delete()
+    return redirect('/')
 
 
 @login_required(login_url="/login/")

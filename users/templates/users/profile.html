@@ -29,7 +29,7 @@ Profile
         <div class="option-btns flex justify-center md:text-2xl space-x-4 items-center h-[5%] w-[90%]">
             <button type="submit" class="h-[2.5rem] w-[5rem] md:h-[3.5rem] md:w-[8rem] text-center p-2 rounded-xl bg-purple-700 hover:bg-green-500">Update</button>
             <button type="submit" class="h-[2.5rem] w-[5rem] md:h-[3.5rem] md:w-[8rem] text-center p-2 rounded-xl bg-orange-700 hover:bg-yellow-500"><a href={% url 'logout' %}>logout</a></button>
-            <button type="submit" class="h-[2.5rem] w-[5rem] md:h-[3.5rem] md:w-[8rem] text-center p-2 rounded-xl bg-red-500 hover:bg-red-800">Signout</button>
+            <button type="submit" class="h-[2.5rem] w-[5rem] md:h-[3.5rem] md:w-[8rem] text-center p-2 rounded-xl bg-red-500 hover:bg-red-800"><a href={% url 'delete' %}>Signout</a></button>
         </div>
         {% endfor %}
     </div>
