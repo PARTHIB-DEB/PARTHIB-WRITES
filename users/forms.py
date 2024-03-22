@@ -15,6 +15,7 @@ class UserForm(UserCreationForm):
             raise ValidationError("Passwords don't match")
         return password2
     
+    
 
 class LoginForm(ModelForm):
     class Meta:

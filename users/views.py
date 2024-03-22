@@ -1,4 +1,6 @@
 from django.shortcuts import render , redirect , HttpResponseRedirect
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 from users.forms import *
 from django.contrib.auth import login ,authenticate , logout
 from django.contrib.auth.decorators import login_required
@@ -17,17 +19,12 @@ Sender_Email_Password = os.getenv('EMAIL_HOST_PASSWORD')
 # Create your views here.
 
 
-# This set is used for caching by storing usernames locally (maybe will use later)
-registered_users = list(newUser.new_objects.filter().values_list("username",flat=True))
-# print(logged_users)
-    
-
 def register(request):
     
     '''
     This function is used to register or SignIn a new user into our webapp.
     Here all user inputs are being taken by the ModelForm UserForm and custom Model newUser
-    Also, the defaultmanager 'new_objects' has been overrriden.
+    Also, the defaultmanager 'objects' has been overrriden.
     '''
     if request.method == "POST":
         form = UserForm(request.POST)
@@ -38,23 +35,25 @@ def register(request):
             username = user_datas['username']
             email = user_datas['email']
             
-            if newUser.new_objects.filter(username = username).count()>0: # Checking if the username exists in Db
+            if newUser.objects.filter(username = username).count()>0: # Checking if the username exists in Db
                 raise ValidationError("USERNAME must be UNIQUE")
             
-            if newUser.new_objects.filter(email = email).count()>0: # Checking if the email exists in Db
+            if newUser.objects.filter(email = email).count()>0: # Checking if the email exists in Db
                 raise ValidationError("EMAIL must be UNIQUE")
             
-            if newUser.new_objects.filter(password = password).count()>0: # Checking if the password exists in Db
+            if newUser.objects.filter(password = password).count()>0: # Checking if the password exists in Db
                 raise ValidationError("PASSWORD must be UNIQUE")
             
             if username == Sender_Email:
-                user_obj = newUser.new_objects.create_superuser(username=username,email=email,password=password)
-                # user_obj.is_superuser = True
-                # user_obj.is_user = True
-                # user_obj.save()
+                newUser.objects.create_superuser(username=username,email=email,password=password)
+                # is_staff = True
+                # is_superuser = True
+                # newUser.objects.filter(username = request.user.username).save_superattrs(
+                #     is_staff,is_superuser
+                # )
             else:
-                user_obj = newUser.new_objects.create_user(username=username,email=email,password=password)
-            newUser.new_objects.filter(username=user_datas['username']).update(first_name=user_datas['first_name'] , last_name = user_datas['last_name'])
+                user_obj = newUser.objects.create_user(username=username,email=email,password=password)
+            newUser.objects.filter(username=user_datas['username']).update(first_name=user_datas['first_name'] , last_name = user_datas['last_name'])
             login(request,user_obj)
             return redirect('/blogs/')
         else:
@@ -90,7 +89,7 @@ def logUserIn(request):
 def logUserOut(request):
     uname = request.user.username
     logout(request)
-    if newUser.new_objects.filter(username = uname).count()==1:
+    if newUser.objects.filter(username = uname).count()==1:
         return redirect ('/login/')
 
 
@@ -100,11 +99,45 @@ def destroy(request):
     This function is used to Delete user's account.
     That means he/she wants to sign out.
     '''
-    newUser.new_objects.filter(username = request.user.username).all().delete()
+    newUser.objects.filter(username = request.user.username).all().delete()
     return redirect('/')
 
 
 @login_required(login_url="/login/")
 def profile(request):
-    context = {"blogs":newUser.new_objects.filter(username = request.user.username).all()}
+    context = {"blogs":newUser.objects.filter(username = request.user.username).all()}
     return render(request, './users/profile.html',context)
+
+
+@login_required(login_url="/login/")
+def updProfile(request):
+    if request.method == "GET":
+        return render(request, './users/upd_profile.html')
+    else:
+        form = UserForm(request.POST or None)
+        data = form.data
+        x =  newUser.objects.filter(username = request.user.username).update(
+            username = data['username'],
+            email = data['email'],
+            first_name = data['first_name'],
+            last_name = data['last_name']
+        )
+        x
+        return redirect('/blogs/')
+
+
+@login_required(login_url='/login/')
+def passwordChange(request):
+    if request.method == "POST":
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            return redirect('/blogs/')
+    else:
+        form = PasswordChangeForm(user=request.user)        
+        return render(request,'./users/upd_password.html',context={"form":form})
+        
+        
+
+        
