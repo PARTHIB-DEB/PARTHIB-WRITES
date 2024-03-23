@@ -31,7 +31,6 @@ def register(request):
         if form.is_valid():
             password = form.clean_password2() # check if raw and confirm password are same or not
             user_datas = form.cleaned_data
-            print(user_datas)
             username = user_datas['username']
             email = user_datas['email']
             
@@ -44,23 +43,18 @@ def register(request):
             if newUser.objects.filter(password = password).count()>0: # Checking if the password exists in Db
                 raise ValidationError("PASSWORD must be UNIQUE")
             
-            if username == Sender_Email:
-                newUser.objects.create_superuser(username=username,email=email,password=password)
-                # is_staff = True
-                # is_superuser = True
-                # newUser.objects.filter(username = request.user.username).save_superattrs(
-                #     is_staff,is_superuser
-                # )
+            if email == Sender_Email:
+                user_obj = newUser.objects.create_superuser(username=username,email=email,password=password)
             else:
                 user_obj = newUser.objects.create_user(username=username,email=email,password=password)
-            newUser.objects.filter(username=user_datas['username']).update(first_name=user_datas['first_name'] , last_name = user_datas['last_name'])
+            newUser.objects.filter(username=user_datas['username']).update(
+                first_name=user_datas['first_name'] , last_name = user_datas['last_name']
+            )
             login(request,user_obj)
             return redirect('/blogs/')
         else:
-            print("\n\t\t OH NO!! FORM IS NOT VALID -> Register")
             return render(request, "./users/register.html")
     else:
-        print("\n\t\t OH NO!! REQUEST IS NOT POST -> Register")
         return render(request, "./users/register.html")
 
 
@@ -134,9 +128,8 @@ def passwordChange(request):
             form.save()
             update_session_auth_hash(request, form.user)
             return redirect('/blogs/')
-    else:
-        form = PasswordChangeForm(user=request.user)        
-        return render(request,'./users/upd_password.html',context={"form":form})
+    form = PasswordChangeForm(user=request.user)        
+    return render(request,'./users/upd_password.html',context={"form":form})
         
         
 
