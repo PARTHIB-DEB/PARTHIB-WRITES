@@ -44,12 +44,14 @@ def register(request):
                 raise ValidationError("PASSWORD must be UNIQUE")
             
             if email == Sender_Email:
-                user_obj = newUser.objects.create_superuser(username=username,email=email,password=password)
+                user_obj = newUser.objects.create_superuser(username=username,email=email,password=password , first_name=user_datas['first_name'] , last_name = user_datas['last_name'])
             else:
-                user_obj = newUser.objects.create_user(username=username,email=email,password=password)
-            newUser.objects.filter(username=user_datas['username']).update(
-                first_name=user_datas['first_name'] , last_name = user_datas['last_name']
-            )
+                user_obj = newUser.objects.create_user(username=username,email=email,password=password , first_name=user_datas['first_name'] , last_name = user_datas['last_name'])
+            subject = "Parthib-writes | Account Confirmation from Parthib-writes"
+            message = f"Hey {username}, If you got this mail , that means your account have been verified and created.\n You are now an authorised user so jump into http://127.0.0.1:8000/blogs/"
+            from_mail = Sender_Email
+            to_email = [email,]
+            send_mail(subject=subject,message=message,from_email=from_mail,recipient_list=to_email,fail_silently=True)
             login(request,user_obj)
             return redirect('/blogs/')
         else:
