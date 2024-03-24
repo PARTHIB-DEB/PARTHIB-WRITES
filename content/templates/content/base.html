@@ -19,7 +19,7 @@
 <!--Home Page-->
 
 
-<body class="overflow-x-hidden bg-no-repeat text-black font-normal"
+<body class="overflow-x-hidden bg-no-repeat text-black font-normal scroll-smooth"
     style="font-family: Mukta; font-weight: 400;">
     <header class="py-[1.2rem] w-full md:mb-[3rem]" style="padding-top:2.5rem; --tw-bg-opacity: 1; background-color: rgb(156 163 175 / var(--tw-bg-opacity));">
         <!--Small Navbar-->
@@ -45,7 +45,7 @@
             <div class="encap-float-menu h-[23rem] w-[88%]  flex justify-center items-center absolute">
                 <div class="small-nav-float h-full w-full z-10 -translate-y-[30rem]  hidden flex-col items-center justify-center space-y-[2.5rem] shadow-black shadow-xl  absolute text-2xl bg-white text-black rounded-xl md:rounded-2xl" style="filter:drop-shadow(1px 1px 1px white);"
                     id="navItems">
-                    <p class="blogss hover:cursor-pointer">Blogs</p>
+                    <p class="blogss hover:cursor-pointer" id="nav-blog">Blogs</p>
                     <p class="platforms hover:cursor-pointer">Other Platforms</p>
                     <p class="Courses cat hover:cursor-pointer">Courses</p>
                     <p class="Profile cat hover:cursor-pointer" style="filter:drop-shadow(1px 1px 1px white);"><a href={% url 'profile' %}>Profile</a></p>
@@ -66,7 +66,7 @@
                     <i>Parthib-Writes</i>
                 </p>
             </a>
-            <p class="blogss hover:cursor-pointer" style="filter:drop-shadow(1px 1px 1px white);">Blogs</p>
+            <p class="blogss hover:cursor-pointer" style="filter:drop-shadow(1px 1px 1px white);" id="nav-blog">Blogs</p>
             <p class="platforms hover:cursor-pointer" style="filter:drop-shadow(1px 1px 1px white);">Other Platforms</p>
             <p class="cat hover:cursor-pointer" style="filter:drop-shadow(1px 1px 1px white);">Courses</p>
             <p class="cat hover:cursor-pointer" style="filter:drop-shadow(1px 1px 1px white);"><a href={% url 'profile' %}>Profile</a></p>
