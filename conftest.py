@@ -12,13 +12,13 @@ load_dotenv()
 
 Sender_Email = os.getenv("EMAIL_HOST_USER")
 Sender_Email_Password = os.getenv("EMAIL_HOST_PASSWORD")
-usermodel = django_user_model(db="test_personal_blog")
+usermodel = django_user_model
 
 
-@pytest.mark.django_db
-class TestUserModel:
 
-    @pytest.fixture(scope="class")
+class ConfUserModel:
+
+
     def __init__(self, **data) -> None:
         form = UserForm(data=data)
         if form.is_valid():
@@ -30,7 +30,7 @@ class TestUserModel:
             self.last_name = (user_data.get("last_name"),)
             self.is_logged_in = 0
 
-    @pytest.fixture(scope="class")
+
     def create_a_user(self):
         if self.email == Sender_Email:
             user_obj = usermodel.objects.create_superuser(
@@ -51,8 +51,7 @@ class TestUserModel:
                 last_name=self.last_name,
             )
             assert user_obj.is_superuser == True
-            yield user_obj.username
-            usermodel.objects.filter(username=user_obj.username).all().delete()
+            return user_obj.username
 
     def update_a_user(self, data, create_a_user: str):
         prev_user_obj = usermodel.objects.filter(username=create_a_user).all()
