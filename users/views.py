@@ -1,6 +1,6 @@
 from django.shortcuts import render , redirect , HttpResponseRedirect
 from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth import update_session_auth_hash , get_user_model
 from users.forms import *
 from django.contrib.auth import login ,authenticate , logout
 from django.contrib.auth.decorators import login_required
@@ -105,6 +105,8 @@ def profile(request):
     return render(request, './users/profile.html',context)
 
 
+# change this and make it like updation of 'content'
+#change the logic using 'get' method
 @login_required(login_url="/login/")
 def updProfile(request):
     if request.method == "GET":
@@ -133,5 +135,4 @@ def passwordChange(request):
     return render(request,'./users/upd_password.html',context={"form":form})
         
         
-
         
