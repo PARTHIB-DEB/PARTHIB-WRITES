@@ -28,14 +28,13 @@ log_data = {
 class TestUserModel :
     
     def setup_method(self,method):
-        self.user = ConfUserModel(data=data)
-        
+        self.user = ConfUserModel()
         
     def teardown_method(self,method):
         del self.user
-    
+        
     def test_create_a_user(self):
-        return self.user.create_a_user()
+        return self.user.create_a_user(data=data)
     
     def test_update_a_user(self):
         self.user.update_a_user(data=upd_data,create_a_user=self.test_create_a_user())

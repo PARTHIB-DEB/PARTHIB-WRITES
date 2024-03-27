@@ -17,9 +17,9 @@ usermodel = django_user_model
 
 
 class ConfUserModel:
-
-
-    def __init__(self, **data) -> None:
+    
+    @pytest.fixture
+    def create_a_user(self,**data):
         form = UserForm(data=data)
         if form.is_valid():
             user_data = form.cleaned_data
@@ -29,31 +29,28 @@ class ConfUserModel:
             self.first_name = (user_data.get("first_name"),)
             self.last_name = (user_data.get("last_name"),)
             self.is_logged_in = 0
+            if self.email == Sender_Email:
+                user_obj = usermodel.objects.create_superuser(
+                    username=self.username,
+                    email=self.email,
+                    password=self.password,
+                    first_name=self.first_name,
+                    last_name=self.last_name,
+                )
+                assert user_obj.is_superuser == True
+                return user_obj.username
+            else:
+                user_obj = usermodel.objects.create_user(
+                    username=self.username,
+                    email=self.email,
+                    password=self.password,
+                    first_name=self.first_name,
+                    last_name=self.last_name,
+                )
+                assert user_obj.is_superuser == True
+                return user_obj.username
 
-
-    def create_a_user(self):
-        if self.email == Sender_Email:
-            user_obj = usermodel.objects.create_superuser(
-                username=self.username,
-                email=self.email,
-                password=self.password,
-                first_name=self.first_name,
-                last_name=self.last_name,
-            )
-            assert user_obj.is_superuser == True
-            return user_obj.username
-        else:
-            user_obj = usermodel.objects.create_user(
-                username=self.username,
-                email=self.email,
-                password=self.password,
-                first_name=self.first_name,
-                last_name=self.last_name,
-            )
-            assert user_obj.is_superuser == True
-            return user_obj.username
-
-    def update_a_user(self, data, create_a_user: str):
+    def update_a_user(self, data ,create_a_user:str):
         prev_user_obj = usermodel.objects.filter(username=create_a_user).all()
         form = UserForm(data=data, instance=prev_user_obj)
         if form.is_valid():
