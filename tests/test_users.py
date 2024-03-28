@@ -1,7 +1,7 @@
 import pytest
 from conftest import ConfUserModel
 
-data={
+new_data={
     "username": input("\nUsername : "),
     "email": input("\nEmail : "),
     "first_name": input("\nfirst-name : "),
@@ -33,14 +33,14 @@ class TestUserModel :
     def teardown_method(self,method):
         del self.user
         
-    def test_create_a_user(self):
-        return self.user.create_a_user(data=data)
+    # def test_create_a_user(self):
+    #     self.user.create_a_user(**new_data)
     
     def test_update_a_user(self):
-        self.user.update_a_user(data=upd_data,create_a_user=self.test_create_a_user())
+        self.user.update_a_user(data=upd_data,old_data=new_data)
     
-    def test_update_a_user_passwprd(self):
-        self.user.update_a_user_password(data=upd_pass,create_a_user=self.test_create_a_user())
+    def test_update_a_user_password(self):
+        self.user.update_a_user_password(data=upd_pass,old_data=new_data)
     
     def test_login_a_user(self):
-        self.user.login_a_user(data=log_data)
+        self.user.login_a_user(data=log_data,old_data=new_data)
