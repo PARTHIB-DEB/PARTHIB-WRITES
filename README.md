@@ -23,10 +23,10 @@
   In V1 , I used a readymade packadge , which was not so developer-friendly . So I saw How they made the combination of two different servers and do that manually. Basically
   I applied ```TailwindCss-CLI``` with ```Django``` **(There is one tutorial in my github on this topic , can check out)**. **❗❗ This Way is not recommended for bigger projects**
 
-- ### Emailing the User :
+- ### Emailing the User ✔️
   Here also Django provide their default setup , which I used in V1 but Target Gmail was just refusing my mails :disappointed:. Let's see now
 
-- ### Writing TestCases by Pytest : 
+- ### Writing TestCases by Pytest ✔️
   Needs no introduction , because testcases are an integral part of any serious application. Trying to implement them.
 
 ## How to download this project :
