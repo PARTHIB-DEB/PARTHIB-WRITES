@@ -18,7 +18,7 @@
     <div class="read-blog w-full flex justify-center items-center flex-col px-8 mt-5 text-black">
         {% for item in blog %}
         <img src="/thumbs/{{item.thumbnail}}" alt="" srcset=""class="-mt-[4rem] md:-mt-[8rem] w-[75%] h-[75%] md:w-[50%] md:h-[50%] border-2 solid border-green-400" />
-        <div class="like-comment flex justify-center space-x-4 items-center  h-[2.2rem] w-[14rem]  mt-[1rem]">
+        <div class="like-comment flex justify-center space-x-4 items-center  h-[2.2rem] w-[14rem]  mt-[1rem] text-white">
             <p class="text-base md:text-xl hover:font-bold"><a href={% url "comment" item.title %}>Like & Comment</a></p>
             <p class="tesxt-center text-base md:text-xl">{{comment}}</p>
         </div>

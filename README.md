@@ -1,4 +1,4 @@
-# PARTHIB-WRITES (Personal Blog) (Feb 6,2024 - )
+# PARTHIB-WRITES (Personal Blog) (Feb 6,2024 - Feb 29,2024 )
 - 🖋️ This is My First Full Stack Project Using Django and TailwindCSS. Its V1 was created during Feb-2023. But at that stage It was Not so much featureful 😕.
   
 - 🌝 So I thought to recreate the project.
@@ -24,10 +24,10 @@
   I applied ```TailwindCss-CLI``` with ```Django``` **(There is one tutorial in my github on this topic , can check out)**. **❗❗ This Way is not recommended for bigger projects**
 
 - ### Emailing the User ✔️
-  Here also Django provide their default setup , which I used in V1 but Target Gmail was just refusing my mails :disappointed:. Let's see now
+  Although The code for email is perfect . But as I am using my personal email as sender. so the recever's gmail is not allowing , because its not an email of a company. simple any unsafe app , not having any domain can't send email using the gmail service
 
 - ### Writing TestCases by Pytest ✔️
-  Needs no introduction , because testcases are an integral part of any serious application. Trying to implement them.
+  So , I have written the testcases for both **users** and **blogs** . I declared a **conftest** file, where I created 2 **Class Based Test configurations** individually. Then I used them in my respective test-files.
 
 ## How to download this project :
 

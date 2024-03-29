@@ -15,8 +15,8 @@
 
 <main>
     <!--Reading Blog-->
-    <div class="backdrop-blur-xl w-full h-[35rem] md:h-[50rem] flex flex-col justify-center items-center md:py-[2.5rem] md:px-[8rem] text-white">
-        <form enctype="multipart/form-data" method="post" class="flex flex-col items-center justify-evenly py-[1rem] bg-black/20 text-black rounded-lg h-auto w-full md:p-5">
+    <div class="w-full h-[35rem] md:h-[50rem] flex flex-col justify-center items-center md:py-[2.5rem] md:px-[8rem] text-white">
+        <form enctype="multipart/form-data" method="post" class="flex flex-col items-center justify-evenly py-[1rem] text-black rounded-lg h-auto w-full md:p-5 bg-slate-500/90">
             {% csrf_token %}
             <p class="text-center text-3xl underline pb-6">Comment In Blog <b>{{blog.title}}</b></p>
             {% for i in comment %}

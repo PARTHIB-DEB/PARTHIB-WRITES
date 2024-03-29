@@ -17,10 +17,10 @@
 {% block content %}
 <!--Create Blog-->
 <main>
-    <div class="Create-Blog mt-5">
-        <div class="blog-form h-full w-full py-5 px-2  text-black">
+    <div class="Create-Blog mt-5 ">
+        <div class="blog-form h-full w-full py-5 px-2  text-black ">
             <form enctype="multipart/form-data" method="post"
-                class="space-y-4 flex justify-center items-center flex-col rounded-lg py-2 border-[1px]  solid border-black shadow-lg shadow-black">
+                class="space-y-4 flex justify-center items-center flex-col rounded-lg py-2 border-[1px]  solid border-black shadow-lg shadow-black bg-slate-500/90">
                 {% csrf_token %}
                 <div class="b-title w-[90%] h-[10rem] mt-2  bg-slate-200 p-1 font-extrabold text-xl sm:text-2xl md:text-4xl">
                     <label for="title"></label>
