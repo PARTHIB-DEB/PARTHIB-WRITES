@@ -19,12 +19,12 @@ Delete
 {% block content %}
 <main>
     <div class="encap-delete-card flex justify-center items-center w-full h-[30rem] py-[2.5rem]  md:h-[35rem] px-[1rem] md:px-0 bg-transparent">
-        <div class="delete-card h-full w-full md:w-[50%] rounded-lg bg-black/50 flex flex-col items-center justify-evenly p-[0.5rem] bg-slate-500/90">
+        <div class="delete-card h-full w-full md:w-[50%] rounded-lg flex flex-col items-center justify-evenly p-[0.5rem] bg-slate-500/90">
             <p class="delete-title text-2xl md:text-3xl underline text-center">Write the title : <b>{{blog.title}}</b></p>
             <form enctype="multipart/form-data" method="post" class="flex flex-col items-center justify-evenly w-full p-[1rem] ">
                 {% csrf_token %}
                 <label for="title" class="md:text-2xl lg:text-3xl text-center pb-[1rem]"></label>
-                <input type="text" name="title" class="bg-slate-300 mx-[1rem] h-[2rem] md:h-[3rem] w-full rounded-lg md:text-2xl lg:text-3xl text-center" placeholder="Blog Title">
+                <input type="text" name="title" class="bg-slate-300 text-black mx-[1rem] h-[2rem] md:h-[3rem] w-full rounded-lg md:text-2xl lg:text-3xl text-center" placeholder="Blog Title">
                 <button type="submit" class="bg-blue-400 hover:bg-green-400 text-center h-[2rem] w-[5.5rem] rounded-lg md:h-[3rem] md:w-[7.5rem] md:text-2xl">Submit</button>
             </form>
         </div>

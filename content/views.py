@@ -67,14 +67,20 @@ def updateBlog(request,title):
             form = articleForm(request.POST, request.FILES , instance=upd_obj_instance)
             if form.is_valid():
                 new_data = form.cleaned_data
-                articleCreateModel.objects.filter(title=title).update(
-                    title = new_data['title'],
-                    catchline = new_data['catchline'],
-                    script = new_data['script']
-                )
-                obj = articleCreateModel.objects.get(title=title)
-                obj.thumbnail = new_data['thumbnail']
-                obj.save()
+                if upd_obj_instance.title != new_data.get("title"):
+                    upd_obj_instance.title = new_data.get("title")
+                    
+                if upd_obj_instance.catchline != new_data.get("catchline"):
+                    upd_obj_instance.catchline = new_data.get("catchline")
+                    
+                if upd_obj_instance.thumbnail != new_data.get("thumbnail"):
+                    upd_obj_instance.thumbnail = new_data.get("thumbnail")
+                    
+                if upd_obj_instance.script != new_data.get("script"):
+                    upd_obj_instance.script = new_data.get("script")
+                    
+                articleViewModel.objects.filter(btitle = title).update(btitle = upd_obj_instance.title)
+                upd_obj_instance.save()
                 return redirect ("/blogs/")
             else:
                 return render(request, './content/update.html',upd_obj)
