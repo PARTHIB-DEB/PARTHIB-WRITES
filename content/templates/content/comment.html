@@ -15,12 +15,22 @@
 
 <main>
     <!--Reading Blog-->
-    <div class="backdrop-blur-xl w-full h-[35rem] flex flex-col justify-center items-center md:py-[2.5rem] md:px-[8rem] text-white">
-        <form enctype="multipart/form-data" method="post" class="flex flex-col items-center justify-evenly bg-black/20 text-black rounded-lg h-full w-full md:p-5">
+    <div class="backdrop-blur-xl w-full h-[35rem] md:h-[50rem] flex flex-col justify-center items-center md:py-[2.5rem] md:px-[8rem] text-white">
+        <form enctype="multipart/form-data" method="post" class="flex flex-col items-center justify-evenly py-[1rem] bg-black/20 text-black rounded-lg h-auto w-full md:p-5">
             {% csrf_token %}
             <p class="text-center text-3xl underline pb-6">Comment In Blog <b>{{blog.title}}</b></p>
-            <textarea name="per_comment" class="h-2/3 leading-6 md:h-full w-3/4 p-4 text-lg md:text-xl rounded-lg text-black" id="" cols="30" rows="10" style="resize: none;"></textarea>
-            <button type="submit" class="bg-blue-400 hover:bg-green-400 mt-5 text-center h-[2rem] w-[5.5rem] rounded-lg md:h-[4rem] md:w-[7.5rem] md:text-2xl">Submit</button>
+            {% for i in comment %}
+            <p class="text-center text-base md:text-xl mb-[1rem] w-[60%] bg-white"><b>{{i}}</b></p>
+            {% endfor %}
+            <div class="flex mb-5 text-base md:text-xl text-bold">
+                <label for="total_likes">Like or Comment :</label>
+                <select name="total_likes" class="px-[1rem] ml-[1rem] rounded-lg">
+                    <option value=0>0</option>
+                    <option value=1>1</option>
+                </select>
+            </div>
+            <textarea name="per_comment" class="h-full leading-6 md:h-full w-3/4 p-4 text-lg md:text-xl rounded-lg text-black" id="" cols="30" rows="10" style="resize: none;"></textarea>
+            <button type="submit" class="bg-blue-400 hover:bg-green-400 mt-5 text-center h-[2rem] w-[5.5rem] rounded-lg md:h-[6rem] md:w-[7.5rem] md:text-2xl">Submit</button>
         </form>
     </div>
 </main>

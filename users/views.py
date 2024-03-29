@@ -105,22 +105,33 @@ def profile(request):
     return render(request, './users/profile.html',context)
 
 
-# change this and make it like updation of 'content'
-#change the logic using 'get' method
+
 @login_required(login_url="/login/")
 def updProfile(request):
-    if request.method == "GET":
-        return render(request, './users/upd_profile.html')
+    if request.method == "POST":
+        uobj = newUser.objects.get(username = request.user.username)
+        form = updateUserForm(request.POST or None , instance=uobj)
+        if form.is_valid():
+            new_data = form.cleaned_data
+            
+            if uobj.username != new_data.get("username"):
+                uobj.username = new_data.get("username")
+                
+            if uobj.email != new_data.get("email"):
+                uobj.email = new_data.get("email")
+                
+            if uobj.first_name != new_data.get("first_name"):
+                uobj.first_name = new_data.get("first_name")
+                
+            if uobj.last_name != new_data.get("last_name"):
+                uobj.last_name = new_data.get("last_name")
+            
+            uobj.save()
+            return redirect('/blogs/')
+        else:
+           return render(request, './users/upd_profile.html') 
     else:
-        form = UserForm(request.POST or None)
-        data = form.data
-        x =  newUser.objects.filter(username = request.user.username).update(
-            username = data['username'],
-            email = data['email'],
-            first_name = data['first_name'],
-            last_name = data['last_name']
-        )
-        return redirect('/blogs/')
+        return render(request, './users/upd_profile.html')
 
 
 @login_required(login_url='/login/')

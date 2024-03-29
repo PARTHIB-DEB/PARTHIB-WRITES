@@ -31,7 +31,5 @@ class TestUserModel :
     def test_update_a_user(self):
         self.blog.update_a_blog(data=upd_data,old_data=new_data)
         
-    def test_retrieve_a_blog(self):
-        self.blog.retrieve_a_blog(old_data=new_data)
     
     

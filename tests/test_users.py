@@ -33,8 +33,8 @@ class TestUserModel :
     def teardown_method(self,method):
         del self.user
         
-    # def test_create_a_user(self):
-    #     self.user.create_a_user(**new_data)
+    def test_create_a_user(self):
+        self.user.create_a_user(**new_data)
     
     def test_update_a_user(self):
         self.user.update_a_user(data=upd_data,old_data=new_data)

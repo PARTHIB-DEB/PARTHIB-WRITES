@@ -19,24 +19,24 @@
 <!--Home Page-->
 
 
-<body class="overflow-x-hidden bg-no-repeat text-black font-normal scroll-smooth"
+<body class="overflow-x-hidden bg-no-repeat text-white font-normal bg-black"
     style="font-family: Mukta; font-weight: 400;">
-    <header class="py-[1.2rem] w-full md:mb-[3rem]" style="padding-top:2.5rem; --tw-bg-opacity: 1; background-color: rgb(156 163 175 / var(--tw-bg-opacity));">
+    <header class="py-[1.2rem] w-full md:mb-[3rem]" style="padding-top:2.5rem;">
         <!--Small Navbar-->
         <div class="small-navbar w-auto px-[1.5rem] md:hidden hover:cursor-pointer" id="smallnav">
             <div class="nav-ham flex items-center justify-between text-xl ">
                 <a href={% url "home" %}>
-                    <p class="site-name hover:cursor-pointer " id="site-name" style="filter:drop-shadow(1px 1px 1px white);">
+                    <p class="site-name hover:cursor-pointer " id="site-name" style="filter:drop-shadow(1px 1px 1px black);">
                         <i>Parthib-Writes</i>
                     </p>
                 </a>
                 <!--Manual Hamburger Creation-->
                 <div class="flex justify-end items-center -mr-[1rem] z-[10]" id="ham">
-                    <div class="name-menu flex justify-between" style="filter:drop-shadow(1px 1px 1px white);">
+                    <div class="name-menu flex justify-between" style="filter:drop-shadow(1px 1px 1px black);">
                         <div class="hamburger inline-block p-1 cursor-pointer">
-                            <div class="lines h-1 bg-black w-6 my-1 rounded-md"></div>
-                            <div class="lines h-1 bg-black w-6 my-1 rounded-md"></div>
-                            <div class="lines h-1 bg-black w-6 my-1 rounded-md"></div>
+                            <div class="lines h-1 bg-white w-6 my-1 rounded-md"></div>
+                            <div class="lines h-1 bg-white w-6 my-1 rounded-md"></div>
+                            <div class="lines h-1 bg-white w-6 my-1 rounded-md"></div>
                         </div>
                     </div>
                 </div>
@@ -46,8 +46,7 @@
                 <div class="small-nav-float h-full w-full z-10 -translate-y-[30rem]  hidden flex-col items-center justify-center space-y-[2.5rem] shadow-black shadow-xl  absolute text-2xl bg-white text-black rounded-xl md:rounded-2xl" style="filter:drop-shadow(1px 1px 1px white);"
                     id="navItems">
                     <p class="blogss hover:cursor-pointer" id="nav-blog">Blogs</p>
-                    <p class="platforms hover:cursor-pointer">Other Platforms</p>
-                    <p class="Courses cat hover:cursor-pointer">Courses</p>
+                    <p class="platforms hover:cursor-pointer" id="plat-small">Other Platforms</p>
                     <p class="Profile cat hover:cursor-pointer" style="filter:drop-shadow(1px 1px 1px white);"><a href={% url 'profile' %}>Profile</a></p>
                     {% if request.user.is_superuser %}
                     <button type="submit" class="h-[2rem] w-[8rem] md:w-[8.5rem] bg-blue-500 rounded-xl hover:bg-purple-600">
@@ -62,14 +61,13 @@
         <!--Large Navbar + all menus-->
         <div class="large-navbar hidden md:flex justify-evenly items-centers text-xl">
             <a href={% url "home" %}>
-                <p class="site-name hover:cursor-pointer " id="site-name" style="filter:drop-shadow(1px 1px 1px white);">
+                <p class="site-name hover:cursor-pointer " id="site-name" style="filter:drop-shadow(1px 1px 1px black);">
                     <i>Parthib-Writes</i>
                 </p>
             </a>
-            <p class="blogss hover:cursor-pointer" style="filter:drop-shadow(1px 1px 1px white);" id="nav-blog">Blogs</p>
-            <p class="platforms hover:cursor-pointer" style="filter:drop-shadow(1px 1px 1px white);">Other Platforms</p>
-            <p class="cat hover:cursor-pointer" style="filter:drop-shadow(1px 1px 1px white);">Courses</p>
-            <p class="cat hover:cursor-pointer" style="filter:drop-shadow(1px 1px 1px white);"><a href={% url 'profile' %}>Profile</a></p>
+            <p class="blogss hover:cursor-pointer" style="filter:drop-shadow(1px 1px 1px black);" id="nav-blog-big">Blogs</p>
+            <p class="platforms hover:cursor-pointer" style="filter:drop-shadow(1px 1px 1px black);" id="plat-big">Other Platforms</p>
+            <p class="cat hover:cursor-pointer" style="filter:drop-shadow(1px 1px 1px black);"><a href={% url 'profile' %}>Profile</a></p>
             {% if request.user.is_superuser %}
                 <button type="submit" class="h-[2rem] md:h-[2.2rem] w-[6.5rem] md:w-[8.5rem] bg-blue-500 rounded-xl hover:bg-purple-600">
                 <a href={% url "create" %}>
@@ -81,7 +79,7 @@
         <!--Quote-->
         <div class="py-8 px-4 mx-auto max-w-screen-xl text-center mt-[3rem] md:mt-[8rem] lg:py-16 lg:px-12">
             {% block desc %}
-            <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl lg:text-6xl" style="filter:drop-shadow(1px 1px 1px white);">
+            <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl lg:text-6xl" style="filter:drop-shadow(1px 1px 1px black);">
                 Welcome to My Personal Blog
             </h1>
             <p class="mb-8 text-lg font-normal text-gray-200 lg:text-xl sm:px-16 xl:px-48" style="filter:drop-shadow(1px 1px 1px black);">
@@ -127,10 +125,10 @@
             </p>
             <div class="platform flex justify-evenly items-center  w-full h-[10rem]">
                 <a href="https://parthib23.hashnode.dev/"><img src="/static/hashnode.png" alt=""
-                        class="h-[2rem] w-[2rem]"></a>
+                        class="h-[2rem] w-[2rem]" style="filter:drop-shadow(1px 2px 2px white);"></a>
                 <a href="https://medium.com/@parthibkumardeb"><img src="/static/medium.jpg" alt=""
-                        class="h-[2rem] w-[2rem]"></a>
-                <a href="https://dev.to/parthib_deb23"><img src="/static/dev.jpeg" alt="" class="h-[2rem] w-[2rem]"></a>
+                        class="h-[2rem] w-[2rem]" style="filter:drop-shadow(1px 2px 2px white);"></a>
+                <a href="https://dev.to/parthib_deb23"><img src="/static/dev.jpeg" alt="" class="h-[2rem] w-[2rem]" style="filter:drop-shadow(1px 2px 2px white);"></a>
             </div>
         </div>
     </main>

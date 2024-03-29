@@ -1,8 +1,8 @@
 "use strict";
+
 let elem = document.getElementById('ham')
 let ham = document.getElementById('navItems')
 let main = document.getElementsByTagName('main')
-let nav_blog = document.getElementById('nav-blog')
 
 const rotate=()=> {
     if (elem.style.transform === 'rotate(0deg)') {
@@ -19,10 +19,23 @@ const rotate=()=> {
 }
 elem.addEventListener("click",rotate);
 
-
-nav_blog.addEventListener("click",function () {
-  document.querySelector("body").style.transitionTimingFunction = 'ease'
-  document.querySelector("body").style.transitionDuration = '2s'
-//   document.querySelector("body").style.scrollBehavior = "smooth"
-  document.querySelector("body").scroll(0,100)
-})
+const small_nav = document.getElementById("nav-blog")
+const big_nav = document.getElementById("nav-blog-big")
+const small_plat = document.getElementById("plat-small")
+const big_plat = document.getElementById("plat-big")
+small_nav.addEventListener('click', () => window.scrollTo({
+    top: 400,
+    behavior: 'smooth',
+}));
+big_nav.addEventListener('click', () => window.scrollTo({
+    top: 400,
+    behavior: 'smooth',
+}));
+small_plat.addEventListener('click', () => window.scrollTo({
+    top: 1200,
+    behavior: 'smooth',
+}));
+big_plat.addEventListener('click', () => window.scrollTo({
+    top: 1200,
+    behavior: 'smooth',
+}));

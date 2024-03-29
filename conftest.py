@@ -26,7 +26,6 @@ class ConfUserModel:
         if form.is_valid():
             return data
         
-    @pytest.fixture(scope='function')
     def create_a_user(self,**old_data):
             if old_data.get("email") == Sender_Email:
                 user_obj = self.django_user_model.objects.create_superuser(
@@ -37,7 +36,6 @@ class ConfUserModel:
                     last_name=old_data.get("last_name"),
                 )
                 assert user_obj.is_superuser == True
-                return throw_name(old_data.get("username"))
             else:
                 user_obj = self.django_user_model.objects.create_user(
                     username=old_data.get("username"),
@@ -47,7 +45,6 @@ class ConfUserModel:
                     last_name=old_data.get("last_name"),
                 )
                 assert user_obj.is_superuser == False
-                return old_data.get("username")
 
     def update_a_user(self, data:dict , **old_data):
         form = UserForm(data=data)
@@ -113,19 +110,6 @@ class ConfBlogModel :
             blog_obj.save()
             assert old_data != data
     
-    # def retrieve_a_blog(self ,**old_data):
-    #     try:
-    #         uname = self.viewer.objects.get(email = Sender_Email).username
-    #         x = self.view_blog.objects.update_or_create(
-    #             btitle_id = self.blog.objects.get(title=old_data.get("title")),
-    #             btitle = self.blog.objects.get(title=old_data.get("title")).title,
-    #             user_id = self.viewer.objects.filter(username = uname).first(),
-    #             username = uname
-    #         )
-    #         x.save()
-    #         assert self.view_blog.objects.all().count() > 0
-            
-    #     except Exception as error:
-    #         print(error)
+
         
         
