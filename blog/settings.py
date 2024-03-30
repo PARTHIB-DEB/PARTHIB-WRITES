@@ -12,11 +12,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 
-# load_dotenv()
+load_dotenv()
 
-# KEY = os.getenv("SECRET_KEY")
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -105,19 +105,20 @@ import dj_database_url
 #     }
 # }
 
-uri = f"postgresql://pkdeb"
-uri += f":pkblog"
-uri += f"@127.0.0.1"
-uri += f":5432"
-uri += f"/personal_blog"
 
 # Replace the SQLite DATABASES configuration with PostgreSQL:
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         # Replace this value with your local database's connection string.
+#         default=uri,
+#         conn_max_age=600
+#     )
+# }
+
+URI = os.getenv("DB_URI")
+
 DATABASES = {
-    'default': dj_database_url.config(
-        # Replace this value with your local database's connection string.
-        default=uri,
-        conn_max_age=600
-    )
+	"default": dj_database_url.parse(URI)
 }
 
 
