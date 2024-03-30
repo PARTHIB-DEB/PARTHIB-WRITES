@@ -90,26 +90,26 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 
 import dj_database_url
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'personal_blog',
-        'USER': 'pkdeb',
-        'PASSWORD': 'pkblog',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-        'TEST': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'test_personal_blog',
-        }
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'personal_blog',
+#         'USER': 'pkdeb',
+#         'PASSWORD': 'pkblog',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432',
+#         'TEST': {
+#             'ENGINE': 'django.db.backends.postgresql',
+#             'NAME': 'test_personal_blog',
+#         }
+#     }
+# }
 
-uri = f"postgresql://{DATABASES['default']['USER']}"
-uri += f":{DATABASES['default']['PASSWORD']}"
-uri += f"@{DATABASES['default']['HOST']}"
-uri += f":{DATABASES['default']['PORT']}"
-uri += f"/{DATABASES['default']['NAME']}"
+uri = f"postgresql://pkdeb"
+uri += f":pkblog"
+uri += f"@localhost"
+uri += f":5432"
+uri += f"/personal_blog"
 
 # Replace the SQLite DATABASES configuration with PostgreSQL:
 DATABASES = {
