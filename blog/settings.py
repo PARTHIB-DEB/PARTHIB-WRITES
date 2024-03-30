@@ -107,7 +107,7 @@ import dj_database_url
 
 uri = f"postgresql://pkdeb"
 uri += f":pkblog"
-uri += f"@localhost"
+uri += f"@127.0.0.1"
 uri += f":5432"
 uri += f"/personal_blog"
 
