@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+# from dotenv import load_dotenv
+
+# load_dotenv()
+
+# KEY = os.getenv("SECRET_KEY")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-#lx36!sb8xx3fl#^(fa$0@*xffe8r8g5t3sj+en@u-(59xqye8'
+SECRET_KEY ='django-insecure-#lx36!sb8xx3fl#^(fa$0@*xffe8r8g5t3sj+en@u-(59xqye8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -53,6 +58,7 @@ MIDDLEWARE = [
     "django_browser_reload.middleware.BrowserReloadMiddleware", # new
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'blog.urls'
@@ -82,6 +88,8 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+import dj_database_url
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -96,6 +104,22 @@ DATABASES = {
         }
     }
 }
+
+uri = f"postgresql://{DATABASES['default']['USER']}"
+uri += f":{DATABASES['default']['PASSWORD']}"
+uri += f"@{DATABASES['default']['HOST']}"
+uri += f":{DATABASES['default']['PORT']}"
+uri += f"/{DATABASES['default']['NAME']}"
+
+# Replace the SQLite DATABASES configuration with PostgreSQL:
+DATABASES = {
+    'default': dj_database_url.config(
+        # Replace this value with your local database's connection string.
+        default=uri,
+        conn_max_age=600
+    )
+}
+
 
 # Registering My custom User Model
 AUTH_USER_MODEL = 'users.newUser'
@@ -137,6 +161,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+if not DEBUG:
+    # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
+    # and renames the files with unique names for each version to support long-term caching
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    
+    
+    
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'thumbs/')
 MEDIA_URL = '/thumbs/'
