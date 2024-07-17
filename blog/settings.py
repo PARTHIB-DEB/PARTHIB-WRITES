@@ -21,7 +21,7 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-ALLOWED_HOSTS=['parthib-writes.onrender.com','127.0.0.1:8000',]
+ALLOWED_HOSTS=['parthib-writes.onrender.com','127.0.0.1',]
 
 
 # Quick-start development settings - unsuitable for production
