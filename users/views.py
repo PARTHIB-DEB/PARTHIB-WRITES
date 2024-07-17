@@ -70,7 +70,7 @@ def logUserIn(request):
         user_datas = form.data
         username = user_datas['username']
         password = user_datas['password']
-        user_obj = authenticate(request,username=username,password=password)
+        user_obj = authenticate(username=username,password=password)
         if user_obj is not None:
             login(request,user_obj)
             return redirect('/blogs/')
