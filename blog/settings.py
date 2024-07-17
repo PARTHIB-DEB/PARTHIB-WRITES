@@ -64,6 +64,8 @@ ROOT_URLCONF = 'blog.urls'
 # APPEND_SLASH = False
 # SESSION_COOKIE_ADMIN ="http://127.0.0.1:8000"
 
+ALLOWED_HOSTS = ["127.0.0.1","localhost"]
+
 
 TEMPLATES = [
     {
@@ -88,31 +90,6 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 import dj_database_url
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'personal_blog',
-#         'USER': 'pkdeb',
-#         'PASSWORD': 'pkblog',
-#         'HOST': '127.0.0.1',
-#         'PORT': '5432',
-#         'TEST': {
-#             'ENGINE': 'django.db.backends.postgresql',
-#             'NAME': 'test_personal_blog',
-#         }
-#     }
-# }
-
-
-# Replace the SQLite DATABASES configuration with PostgreSQL:
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         # Replace this value with your local database's connection string.
-#         default=uri,
-#         conn_max_age=600
-#     )
-# }
 
 URI = os.getenv("DB_URI")
 
