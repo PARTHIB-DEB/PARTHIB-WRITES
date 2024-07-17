@@ -62,7 +62,7 @@ ROOT_URLCONF = 'blog.urls'
 # APPEND_SLASH = False
 # SESSION_COOKIE_ADMIN ="http://127.0.0.1:8000"
 
-ALLOWED_HOSTS = ["parthib-writes.onrender.com","parthib-writes.vercel.app"]
+ALLOWED_HOSTS = ['127.0.0.1',"parthib-writes.onrender.com","parthib-writes.vercel.app"]
 
 
 TEMPLATES = [
