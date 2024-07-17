@@ -21,8 +21,6 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-ALLOWED_HOSTS=['127.0.0.1:8000','.vercel.app','parthib-writes.onrender.com']
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -64,7 +62,7 @@ ROOT_URLCONF = 'blog.urls'
 # APPEND_SLASH = False
 # SESSION_COOKIE_ADMIN ="http://127.0.0.1:8000"
 
-ALLOWED_HOSTS = ["127.0.0.1","parthib-writes.onrender.com","parthib-writes.vercel.app"]
+ALLOWED_HOSTS = ["parthib-writes.onrender.com","parthib-writes.vercel.app"]
 
 
 TEMPLATES = [
