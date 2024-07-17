@@ -31,7 +31,7 @@ ALLOWED_HOSTS=['127.0.0.1:8000','.vercel.app','parthib-writes.onrender.com']
 SECRET_KEY ='django-insecure-#lx36!sb8xx3fl#^(fa$0@*xffe8r8g5t3sj+en@u-(59xqye8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True # Currently it is true because , without this the UI is not loading in production.
+DEBUG = False # Currently it is true because , without this the UI is not loading in production.
 
 # Application definition
 
