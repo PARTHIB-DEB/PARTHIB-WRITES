@@ -21,6 +21,8 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+ALLOWED_HOSTS=['parthib-writes.onrender.com','127.0.0.1:8000',]
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -29,7 +31,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY ='django-insecure-#lx36!sb8xx3fl#^(fa$0@*xffe8r8g5t3sj+en@u-(59xqye8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True # Currently it is true because , without this the UI is not loading in production.
+DEBUG = True  # Currently it is true because , without this the UI is not loading in production.
 
 # Application definition
 
@@ -61,8 +63,6 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'blog.urls'
 # APPEND_SLASH = False
 # SESSION_COOKIE_ADMIN ="http://127.0.0.1:8000"
-
-ALLOWED_HOSTS = ['127.0.0.1',"parthib-writes.onrender.com","parthib-writes.vercel.app"]
 
 
 TEMPLATES = [
