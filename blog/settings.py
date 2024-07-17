@@ -64,7 +64,7 @@ ROOT_URLCONF = 'blog.urls'
 # APPEND_SLASH = False
 # SESSION_COOKIE_ADMIN ="http://127.0.0.1:8000"
 
-ALLOWED_HOSTS = ["127.0.0.1","localhost"]
+ALLOWED_HOSTS = ["127.0.0.1","localhost","parthib-writes.onrender.com"]
 
 
 TEMPLATES = [
