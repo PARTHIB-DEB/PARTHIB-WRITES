@@ -90,9 +90,12 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 import dj_database_url
 
 URI = os.getenv("DB_URI")
-
 DATABASES = {
-	"default": dj_database_url.parse(URI)
+    'default': dj_database_url.config(
+        default=URI,
+        conn_max_age=600,  # Set the connection lifetime to 10 minutes
+        ssl_require=True   # Use SSL if required by your database host
+    )
 }
 
 
