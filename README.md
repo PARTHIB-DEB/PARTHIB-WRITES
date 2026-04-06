@@ -4,8 +4,6 @@
 - 🌝 So I thought to recreate the project.
 
 - 🌟 Let's have a look on the feature differences.
-
-- Video : [video](https://drive.google.com/file/d/1xLktMmcWJxG_LZz_WccKFYuVuBQQFHHf/view?usp=sharing)
   
 ## Features ⚡⚡
 - ### User Authentication ✔️
