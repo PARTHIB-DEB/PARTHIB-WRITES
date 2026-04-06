@@ -1,4 +1,4 @@
-# PARTHIB-WRITES (Personal Blog) (Feb 6,2024 - Feb 29,2024 )
+# PARTHIB-WRITES (Personal Blog)
 - 🖋️ This is My First Full Stack Project Using Django and TailwindCSS. Its V1 was created during Feb-2023. But at that stage It was Not so much featureful 😕.
   
 - 🌝 So I thought to recreate the project.
